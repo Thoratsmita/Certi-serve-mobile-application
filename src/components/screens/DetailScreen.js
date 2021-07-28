@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "hidden",
     marginRight: 10,
+    backgroundColor:"#fff"
   },
   docFooter: {
     padding: 10,
