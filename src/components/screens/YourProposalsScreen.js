@@ -11,9 +11,11 @@ import {
 import SubmitButton from "../SubmitButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../config/colors";
+import YourProposalCard from "../YourProposalCard";
 
 export default function YourProposalsScreen() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [showData, setShowData] = useState(false);
   const BoxInput = ({
     defaultValue,
     flexDirection = "row",
@@ -100,16 +102,24 @@ export default function YourProposalsScreen() {
   return (
     <View style={styles.container}>
       <ModalView />
-      <View style={{ height: "50%", justifyContent: "space-evenly" }}>
-        <Text style={{ textAlign: "center", color: "#a9a9a9", fontSize: 18 }}>
-          You have not created any proposal.
-        </Text>
-        <SubmitButton
-          title="Create A Proposal"
-          onPress={() => setModalVisible(!modalVisible)}
-          textColor="#fff"
-        />
-      </View>
+      {showData ? (
+        <YourProposalCard />
+      ) : (
+        <View style={{ height: "50%", justifyContent: "space-evenly" }}>
+          <Text style={{ textAlign: "center", color: "#a9a9a9", fontSize: 18 }}>
+            You have not created any proposal.
+          </Text>
+          <SubmitButton
+            title="Create A Proposal"
+            onPress={() => {
+              setModalVisible(!modalVisible);
+              setShowData(true);
+            }}
+            textColor="#fff"
+            fontSize={16}
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -118,6 +128,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    paddingHorizontal: 15,
   },
   modalContainer: {
     flex: 1,
@@ -172,6 +183,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
     backgroundColor: "#fff",
+    fontSize: 18,
   },
   block: {
     flexDirection: "row",
