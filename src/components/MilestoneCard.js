@@ -8,7 +8,14 @@ export default function MilestoneCard({ status, route, index, last }) {
   const TextColor = (e) => {
     if (e === "Pending") return "#ff0000";
     if (e === "Approved") return colors.primary;
+    if (e === "Yet to release") return "#ffffff";
+
     return "#979797";
+  };
+  const BackgroundColor = (e) => {
+    if (e === "Yet to release") return "#747474";
+
+    return "#DEDEDE";
   };
   return (
     <View
@@ -35,24 +42,55 @@ export default function MilestoneCard({ status, route, index, last }) {
           renderItem={({ item, index }) => (
             <Box
               title={item}
-              backgroundColor={index % 2 !== 0 ? colors.primary : "#DEDEDE"}
+              backgroundColor={BackgroundColor(item)}
               padding={15}
-              textColor={index % 2 !== 0 ? colors.white : "#979797"}
-              marginRight={15}
+              textColor="#8c8c8c"
+              marginRight={10}
             />
           )}
         />
 
         {/* <Box title="Remote" backgroundColor="#a9a9a9" padding={10} /> */}
-        <Box
-          title={status}
-          backgroundColor="#DEDEDE"
-          padding={15}
-          textColor={TextColor(status)}
-          // marginRight={15}
-          style={{ alignSelf: "flex-end" }}
-          noLimit
-        />
+        {route !== "Created Milestones" && (
+          <Box
+            title={status}
+            backgroundColor={BackgroundColor(status)}
+            padding={15}
+            textColor={TextColor(status)}
+            // marginRight={15}
+            style={{ alignSelf: "flex-end", width: 130, alignItems: "center" }}
+            noLimit
+          />
+        )}
+        {route === "Created Milestones" && (
+          <>
+            <Box
+              title="Approve"
+              backgroundColor={colors.primary}
+              padding={15}
+              textColor="#ffffff"
+              // marginRight={15}
+              style={{
+                alignSelf: "flex-end",
+                // width: 90,
+                marginRight: 5,
+              }}
+              noLimit
+            />
+            <Box
+              title="Reject"
+              backgroundColor="#BE5959"
+              padding={15}
+              textColor="#ffffff"
+              // marginRight={15}
+              style={{
+                alignSelf: "flex-end",
+                // width: 90,
+              }}
+              noLimit
+            />
+          </>
+        )}
         {/* </View> */}
       </View>
     </View>

@@ -19,21 +19,35 @@ export default function ManagementTab({ route }) {
       status: "Not requested",
     },
   ];
-  const ListFooterComponent = () => {
+  const approvedData = [
+    {
+      id: 1,
+      status: "Yet to release",
+    },
+    {
+      id: 2,
+      status: "Yet to release",
+    },
+    {
+      id: 3,
+      status: "Released",
+    },
+  ];
+  const ListHeaderComponent = () => {
     return (
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Actions</Text>
+        {/* <Text style={styles.footerText}>Actions</Text> */}
         <Box
           title="Create A milestone"
           backgroundColor="#DFE9E4"
           padding={15}
-          marginRight={15}
+          // marginRight={15}
           textColor="#969D9A"
           fontSize={16}
           noLimit
-          style={{ marginVertical: 10 }}
+          // style={{ marginVertical: 10 }}
         />
-        <Box
+        {/* <Box
           title="Create A milestone"
           backgroundColor="#DFE9E4"
           padding={15}
@@ -41,7 +55,7 @@ export default function ManagementTab({ route }) {
           fontSize={16}
           textColor="#969D9A"
           noLimit
-        />
+        /> */}
       </View>
     );
   };
@@ -50,22 +64,23 @@ export default function ManagementTab({ route }) {
   return (
     <View style={styles.container}>
       <FlatList
-        data={data}
+        data={approvedData}
         // style={{ paddingVertical: 20 }}
         showsVerticalScrollIndicator={false}
         keyExtractor={(data) => data.id.toString()}
-        ListFooterComponent={
+        ListHeaderComponent={
           route.name !== "Created Milestones"
             ? () => <View />
-            : ListFooterComponent
+            : ListHeaderComponent
         }
         renderItem={({ item, index }) => (
           <MilestoneCard
             index={index + 1}
             status={
-              route.name !== "Created Milestones" ? "Approved" : item.status
+              route.name !== "Created Milestones" ? item.status : item.status
             }
             last={index + 1 === data.length}
+            route={route.name}
           />
         )}
       />
@@ -85,8 +100,10 @@ const styles = StyleSheet.create({
     // flexGrow: 1,
   },
   footer: {
-    alignItems: "flex-start",
-    marginBottom: 30,
+    alignItems: "flex-end",
+    // backgroundColor: "red",
+    // marginBottom: 30,
+    marginTop: 10,
   },
   footerText: {
     color: colors.primary,
