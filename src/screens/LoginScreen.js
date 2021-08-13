@@ -55,7 +55,7 @@ export default function LoginScreen({ navigation: { navigate, goBack } }) {
           )}
         /> */}
 
-        <SubmitButton title="Login" onPress={() => navigate("App")} />
+        <SubmitButton title="Login" onPress={() => navigate("Membership")} />
         <Text style={[styles.title, { fontSize: 15 }]}>--Or--</Text>
         <Text
           style={[styles.title, { textTransform: "capitalize", fontSize: 20 }]}
