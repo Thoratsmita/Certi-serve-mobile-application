@@ -7,8 +7,9 @@ import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ReCaptcha from "react-native-recaptcha-v3";
 
-export default function LoginScreen({ navigation: { navigate, goBack } }) {
+export default function LoginScreen({ navigation: { navigate, goBack }, route }) {
   const [checked, setChecked] = useState(false);
+  const { userType, otherParam } = route.params;
   const circleAvatar = ({ icon, color }) => {
     return (
       <View style={{ margin: 5 }}>
@@ -67,7 +68,7 @@ export default function LoginScreen({ navigation: { navigate, goBack } }) {
           {circleAvatar({ icon: "facebook-with-circle", color: "blue" })}
         </View>
         <TouchableOpacity
-          onPress={() => navigate("Register")}
+          onPress={() => navigate("Register", {usertype: userType})}
           style={{ flexDirection: "row" }}
         >
           <Text

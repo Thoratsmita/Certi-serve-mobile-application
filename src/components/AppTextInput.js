@@ -9,6 +9,7 @@ export default function AppTextInput({
   width = "100%",
   end,
   editable = true,
+  onChangeText,
 }) {
   return (
     <View style={[styles.container, { width: width }]}>
@@ -17,6 +18,7 @@ export default function AppTextInput({
         editable={editable}
         placeholder={placeholder}
         style={styles.text}
+        onChangeText={onChangeText}
       />
       {end && <Text style={styles.endText}>{end}</Text>}
     </View>

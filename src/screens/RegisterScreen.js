@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,7 +15,78 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import colors from "../config/colors";
 
-export default function RegisterScreen({ navigation: { navigate, goBack } }) {
+export default function RegisterScreen({
+  navigation: { navigate, goBack },
+  route,
+}) {
+  const { usertype, otherParam } = route.params;
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userNum, setUserNum] = useState("");
+  const [userPass, setUserPass] = useState("");
+  const [conuserPass, setconUserPass] = useState("");
+  const [userType, setUserType] = useState(usertype);
+
+  const handleRegisterButton = () => {
+    if (!userName) {
+      alert("Please Enter Name!");
+      return;
+    }
+    if (!userEmail) {
+      alert("Please fill Email");
+      return;
+    }
+    if (!userNum) {
+      alert("Please fill Phone Number");
+      return;
+    }
+    if (!userPass) {
+      alert("Please fill Password");
+      return;
+    }
+
+    if (userPass != conuserPass) {
+      alert("Passwords Do Not Match");
+      return;
+    }
+
+    var dataToSend = {
+      Username: userName,
+      name: userName,
+      email: userEmail,
+      PhoneNumber: userNum,
+      password: userPass,
+      UserType: userType,
+    };
+    var formBody = [];
+    for (var key in dataToSend) {
+      var encodedKey = encodeURIComponent(key);
+      var encodedValue = encodeURIComponent(dataToSend[key]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch("http://radiant-bastion-14577.herokuapp.com/api/userscreate", {
+      method: "PUT",
+      body: formBody,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+
+        if (responseJson === 1) {
+          alert("Registration Successful!");
+          navigate("Login");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ position: "absolute", top: 50, left: 20, zIndex: 5 }}>
@@ -35,15 +106,35 @@ export default function RegisterScreen({ navigation: { navigate, goBack } }) {
       >
         <ScrollView style={{ width: "100%", padding: 10 }}>
           <Text style={styles.title}>Sign up</Text>
-          <AppTextInput icon="account" placeholder="Enter Your Name" />
+          <AppTextInput
+            icon="account"
+            placeholder="Enter Your Name"
+            onChangeText={(userName) => setUserName(userName)}
+          />
           <AppTextInput
             icon="wrench-outline"
             placeholder="Enter Your Phone no."
+            onChangeText={(userNum) => setUserNum(userNum)}
           />
-          <AppTextInput icon="email-outline" placeholder="Enter Your Email" />
-          <AppTextInput icon="wrench-outline" placeholder="Password" />
-          <AppTextInput icon="wrench-outline" placeholder="Confirm Password" />
-          <SubmitButton title="Register Me!" onPress={() => navigate("App")} />
+          <AppTextInput
+            icon="email-outline"
+            placeholder="Enter Your Email"
+            onChangeText={(UserEmail) => setUserEmail(UserEmail)}
+          />
+          <AppTextInput
+            icon="wrench-outline"
+            placeholder="Password"
+            onChangeText={(userPass) => setUserPass(userPass)}
+          />
+          <AppTextInput
+            icon="wrench-outline"
+            placeholder="Confirm Password"
+            onChangeText={(conuserPass) => setconUserPass(conuserPass)}
+          />
+          <SubmitButton
+            title="Register Me!"
+            onPress={() => handleRegisterButton()}
+          />
           {/* <View style={{ alignSelf: "flex-end" }}> */}
           <TouchableOpacity
             onPress={() => navigate("Login")}

@@ -16,17 +16,19 @@ export default function WelcomeScreen({ navigation: { navigate } }) {
     {
       title: "Server",
       subTitle: "I'm looking to post jobs and\nhire candidates",
+      navi: () => navigate("Login", {userType: "Server"}),
     },
     {
       title: "Servee",
       subTitle: "I'm willing to set up career\n& get hired by companies.",
+      navi: () => navigate("Login", {userType: "Servee"}),
     },
   ];
 
   const Card = ({ title, subTitle, key, onPress }) => {
     return (
       <TouchableOpacity
-        onPress={() => navigate("Login")}
+        onPress={onPress}
         key={key}
         style={styles.card}
       >
