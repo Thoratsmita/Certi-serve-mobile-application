@@ -12,44 +12,42 @@ import { Feather } from "@expo/vector-icons";
 import ImageIcon from "../components/ImageIcon";
 import Header from "../components/Header";
 
-
-export default function PlanScreen({navigation:{ navigate, goback }}) {
-
+export default function PlanScreen({ navigation: { navigate, goback } }) {
   const cardData = [
     {
       title: "19908/- Annually",
-      sub: "Description - lorem ipsum lorem ispum" ,  
+      sub: "lorem ipsum lorem ispum",
     },
     {
       title: "2000/- Monthly",
-      sub: "Description - lorem ipsum lorem ispum" , 
-      
+      sub: "lorem ipsum lorem ispum",
     },
   ];
-  
 
-  const Card = ({ title,key,icon,sub }) => {
+  const Card = ({ title, key, icon, sub }) => {
     return (
       <TouchableOpacity
         onPress={() => navigate("Payment")}
         key={key}
         style={styles.card}
       >
-        <Text style={styles.cardTitle}>{title}</Text>
-        <Text style={styles.subs}>{sub}</Text>
-        
+        <Text style={styles.cardTitle}>₦ {title}</Text>
+        <Text style={styles.subs}>Description - {sub}</Text>
       </TouchableOpacity>
     );
   };
 
-
   return (
     <View style={styles.container}>
-      
-      <Header topic=" "/>
-      <Feather name="calendar" size={60} color={colors.secondary} style={{ position: "absolute", top: 200, left: 160}}/>
+      <Header topic=" " />
+      <Feather
+        name="calendar"
+        size={60}
+        color={colors.secondary}
+        style={{ position: "absolute", top: 200, alignSelf: "center" }}
+      />
       <Text style={styles.title}>Choose Plan</Text>
-    
+
       <View style={styles.form}>
         {cardData.map((e, i) => {
           return Card({
@@ -60,16 +58,10 @@ export default function PlanScreen({navigation:{ navigate, goback }}) {
             sub: e.sub,
           });
         })}
-        
       </View>
-
     </View>
-
   );
-
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -91,15 +83,14 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 
-  
-
   title: {
     fontSize: 30,
     color: "gray",
-    marginVertical: 5,   
+    marginVertical: 5,
     position: "absolute",
-    left: 100,
+
     top: 270,
+    alignSelf: "center",
   },
 
   card: {
@@ -119,20 +110,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.secondary,
     fontWeight: "800",
-    
-    
   },
   subs: {
-    fontSize: 15,
+    fontSize: 17,
     color: "gray",
     fontWeight: "800",
-    top:28
-     
+    top: 28,
   },
   cardHeader: {
     alignItems: "center",
     justifyContent: "space-between",
   },
-  
-
 });

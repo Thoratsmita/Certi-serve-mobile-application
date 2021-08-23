@@ -14,13 +14,12 @@ import CircleAvatar from "../components/CircleAvatar";
 import Header from "../components/Header";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function MembershipScreen({navigation:{ navigate, goback }}) {
-
+export default function MembershipScreen({ navigation: { navigate, goback } }) {
   const cardData = [
     {
       title: "Basic",
-      sub: "Free" ,
-      navTo: () => navigate("App"), 
+      sub: "Free",
+      navTo: () => navigate("App"),
     },
     {
       title: "Premium",
@@ -28,33 +27,38 @@ export default function MembershipScreen({navigation:{ navigate, goback }}) {
       navTo: () => navigate("Plans"),
     },
   ];
-  
 
-  const Card = ({ title,key,onPress,icon,sub}) => {
+  const Card = ({ title, key, onPress, icon, sub }) => {
     return (
       <TouchableOpacity
+        activeOpacity={0.9}
         onPress={onPress}
         key={key}
         style={styles.card}
       >
         <Text style={styles.cardTitle}>{title}</Text>
-        <Text style={styles.subs}>{sub}</Text>
-        <Image
-          style={{ width: "85%", height: "85%", resizeMode: "contain" }}
-          source={icon}
-        />
+        {sub && <Text style={styles.subs}>{sub}</Text>}
+        {icon && (
+          <Image
+            style={{
+              width: "85%",
+              height: "85%",
+              resizeMode: "contain",
+            }}
+            source={icon}
+          />
+        )}
       </TouchableOpacity>
     );
   };
 
-
   return (
     <View style={styles.container}>
-      
-      <Header topic=" "/>
+      <View style={{ flex: 1 }}>
+        <Header topic=" " />
+        <Text style={styles.title}>Membership</Text>
+      </View>
 
-      <Text style={styles.title}>Membership</Text>
-    
       <View style={styles.form}>
         {cardData.map((e, i) => {
           return Card({
@@ -63,20 +67,12 @@ export default function MembershipScreen({navigation:{ navigate, goback }}) {
             onPress: e.navTo,
             icon: e.icon,
             sub: e.sub,
-            
-
           });
         })}
-        
       </View>
-
     </View>
-
   );
-
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -91,11 +87,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "45%",
     width: "100%",
-    justifyContent: "space-around",
     elevation: 5,
     shadowOpacity: 1,
-    position: "absolute",
     bottom: 0,
+    flex: 1,
   },
 
   body: {
@@ -106,28 +101,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 33,
     color: "gray",
-    marginVertical: 5,   
-    position: "absolute",
-    left: 85,
-    top: 300,
+    marginVertical: 5,
+    alignSelf: "center",
   },
 
   cardTitle: {
     fontSize: 24,
     color: "gray",
     fontWeight: "800",
-    
   },
 
   subs: {
     fontSize: 23,
     color: colors.primary,
     fontWeight: "800",
-    position: "absolute",
-    left: 185,
-    top: 28,
-
-    
   },
 
   card: {
@@ -137,11 +124,11 @@ const styles = StyleSheet.create({
     padding: 25,
     borderRadius: 15,
     margin: 10,
-    //justifyContent: "space-around",
     elevation: 5,
-    paddingLeft: 30,
-    flexDirection:'row', 
+    flexDirection: "row",
     // backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 30,
   },
-
 });
