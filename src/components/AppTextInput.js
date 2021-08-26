@@ -19,6 +19,7 @@ export default function AppTextInput({
         placeholder={placeholder}
         style={styles.text}
         onChangeText={onChangeText}
+        
       />
       {end && <Text style={styles.endText}>{end}</Text>}
     </View>

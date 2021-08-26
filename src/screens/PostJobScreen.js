@@ -16,19 +16,69 @@ import SubmitButton from "../components/SubmitButton";
 import RadioButton from "../components/RadioButton";
 
 export default function PostJobScreen({ navigation: { goBack } }) {
-  const TextCell = ({ placeholder, end, title, editable }) => {
-    return (
-      <View style={styles.cell}>
-        <Text style={styles.cellText}>{title}</Text>
-        <AppTextInput
-          editable={editable}
-          placeholder={placeholder}
-          width="70%"
-          end={end}
-        />
-      </View>
-    );
+  const [jobDesc, setJobDesc] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [jobCat, setJobCat] = useState("");
+  const [userNum, setUserNum] = useState("");
+  const [userPass, setUserPass] = useState("");
+  const [conuserPass, setconUserPass] = useState("");
+
+  const postJobButton = () => {
+    if (!jobDesc) {
+      alert("Please Enter Description!");
+      return;
+    }
+    if (!jobTitle) {
+      alert("Please fill Job Title");
+      return;
+    }
+
+    if (jobCat) {
+      alert("Please fill Catergory!");
+      return;
+    }
+
+    var dataToSend = {
+      job_title: jobTitle,
+      job_description: jobDesc,
+      job_type: "pqr",
+      server_id:12,
+      servee_id:14,
+      skill_id:4,
+      minimum_experience:2,
+      job_duration:2,
+      freelancer_preference:"yes",
+      job_incentives:1000,
+      date_posted: "2021-01-04",
+    
+    };
+    var formBody = [];
+    for (var key in dataToSend) {
+      var encodedKey = encodeURIComponent(key);
+      var encodedValue = encodeURIComponent(dataToSend[key]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch("http://radiant-bastion-14577.herokuapp.com/api/jobscreate", {
+      method: "POST",
+      body: formBody,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        alert("Success");
+        goBack();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
+
+  
   const ModalCell = ({ placeholder, endIcon, title, editable, onPress }) => {
     return (
       <View style={[styles.cell, { marginVertical: 8 }]}>
@@ -94,11 +144,15 @@ export default function PostJobScreen({ navigation: { goBack } }) {
         <Text style={[styles.text]}>Post Job</Text>
       </View>
       <View style={styles.cellContainer}>
-        <TextCell
-          title="Title"
-          placeholder="e.g. Designer for a my Café  "
-          end="0/50"
-        />
+        <View style={styles.cell}>
+          <Text style={styles.cellText}>Title</Text>
+          <AppTextInput
+            placeholder="Designer for a my Café"
+            width="70%"
+            onChangeText={(jobTitle) => setJobTitle(jobTitle)}
+            end="0/50"
+          />
+        </View>
         <ModalCell
           title="Category "
           placeholder="e.g. Designer for a my Café  "
@@ -122,6 +176,7 @@ export default function PostJobScreen({ navigation: { goBack } }) {
               multiline={true}
               numberOfLines={10}
               style={{ textAlignVertical: "top" }}
+              onChangeText={(jobDesc) => setJobDesc(jobDesc)}
               defaultValue="Et deserunt occaecat enim Amet aliquip excepteur ea ea culpa reprehenderit aute sint esse anim est. Incididunt sint dolore consectetur qui do adipisicing magna. Nisi mollit enim est magna cupidatat occaecat voluptate id. Proident ad officia laborum anim dolore ipsum. Ad magna aliqua anim mollit aliqua cillum et ipsum veniam commodo velit ea.ut pariatur nulla Lorem minim esse Lorem commodo cillum. Sint quis pariatur ad exercitation duis ea fugiat laborum eiusmod dolore sunt pariatur irure. Ex qui non nostrud eiusmod laboris in."
             />
           </View>
@@ -154,7 +209,11 @@ export default function PostJobScreen({ navigation: { goBack } }) {
           </View>
         </View>
       </View>
-      <SubmitButton title="Post job" textColor="#fff" />
+      <SubmitButton
+        title="Post job"
+        textColor="#fff"
+        onPress={() => postJobButton()}
+      />
     </ScrollView>
   );
 }
