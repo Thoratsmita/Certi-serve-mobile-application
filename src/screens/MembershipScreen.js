@@ -55,7 +55,7 @@ export default function MembershipScreen({ navigation: { navigate, goback } }) {
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
-        <Header topic=" " />
+        <Header topic=" " name="David Ray" userName="@davidray" icon="" />
         <Text style={styles.title}>Membership</Text>
       </View>
 

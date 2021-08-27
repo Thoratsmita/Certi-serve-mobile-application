@@ -15,23 +15,19 @@ export default function WelcomeScreen({ navigation: { navigate } }) {
   const cardData = [
     {
       title: "Server",
-      subTitle: "I'm looking to post jobs and\nhire candidates",
-      navi: () => navigate("Login", {userType: "Server"}),
+      subTitle: "I'm willing to set up career\n& get hired by companies.",
+      navi: () => navigate("Login", { userType: "Server" }),
     },
     {
       title: "Servee",
-      subTitle: "I'm willing to set up career\n& get hired by companies.",
-      navi: () => navigate("Login", {userType: "Servee"}),
+      subTitle: "I'm looking to post jobs and\nhire candidates",
+      navi: () => navigate("Login", { userType: "Servee" }),
     },
   ];
 
   const Card = ({ title, subTitle, key, onPress }) => {
     return (
-      <TouchableOpacity
-        onPress={onPress}
-        key={key}
-        style={styles.card}
-      >
+      <TouchableOpacity onPress={onPress} key={key} style={styles.card}>
         <View style={styles.cardHeader}>
           <Text style={styles.cardTitle}>{title}</Text>
           <ImageIcon

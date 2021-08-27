@@ -18,7 +18,7 @@ export default function HomeScreen({ navigation: { navigate } }) {
   // console.log("ready");
   return (
     <View style={styles.container}>
-      <Header />
+      <Header name="David Ray" userName="@davidray" />
       <JobsTopTabNavigation
         onPress={() => navigate("JobDetail")}
         onPressPostJob={() => navigate("PostJob")}

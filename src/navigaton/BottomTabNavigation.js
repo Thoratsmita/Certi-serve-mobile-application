@@ -3,6 +3,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import JobsScreen from "../screens/JobsScreen";
+import Profile_Servee from "../screens/Profile_Servee";
 import HomeScreen from "../screens/HomeScreen";
 import JobsStackNavigation from "./JobStackNavigation";
 import colors from "../config/colors";
@@ -69,7 +70,7 @@ const BottomTabNavigation = () => {
       />
       <Bottom.Screen
         name="Profile"
-        component={JobsScreen}
+        component={Profile_Servee}
         options={({ route }) => ({
           tabBarIcon: ({ color, focused, size }) =>
             focused ? (

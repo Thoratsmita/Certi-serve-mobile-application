@@ -18,6 +18,11 @@ export default function Header({
   onBack,
   topic = "Freelance Graphic Designer",
   postJob,
+  name,
+  userName,
+  radius = 48,
+  icon = "search1",
+  title = false,
 }) {
   return (
     <View
@@ -33,6 +38,19 @@ export default function Header({
           />
         </TouchableOpacity>
       )}
+      {title ? (
+        <Text
+          style={{
+            fontSize: 20,
+            left: 100,
+            bottom: 30,
+            color: colors.secondary,
+          }}
+        >
+          Personal Details
+        </Text>
+      ) : null}
+
       <View
         style={{
           flexDirection: "row",
@@ -43,17 +61,18 @@ export default function Header({
         <View>
           <CircleAvatar
             icon={require("../../assets/appIcon.jpg")}
-            radius={48}
-            title="David Ray"
-            subtitle="@davidray"
+            radius={radius}
+            title={name}
+            subtitle={userName}
             borderColor={colors.primary}
             inline
             outline
           />
         </View>
+
         <View style={{ marginTop: 20 }}>
           <TouchableOpacity>
-            <AntDesign name="search1" size={50} color="#609D80" />
+            <AntDesign name={icon} size={50} color="#609D80" />
           </TouchableOpacity>
         </View>
       </View>
