@@ -25,6 +25,48 @@ const proposalData = [
   },
 ];
 
+const transHistory = [
+  {
+    id: 1,
+    company: "Amazon",
+    category: "Freelance Designer",
+    amount: "₦120.00",
+  },
+
+  {
+    id: 2,
+    company: "Google",
+    category: "Services",
+    amount: "₦120.00",
+  },
+
+  {
+    id: 3,
+    company: "Dell",
+    category: "Services",
+    amount: "₦120.00",
+  },
+];
+
+const bankCards = [
+  {
+    id: 1,
+    bank: "SBI",
+    code: "1234",
+  },
+
+  {
+    id: 2,
+    bank: "MasterCard",
+    code: "1234",
+  },
+  {
+    id: 3,
+    bank: "HDFC",
+    code: "1234",
+  },
+];
+
 const jobCard = [
   {
     id: 1,
@@ -68,4 +110,4 @@ const jobCard = [
   },
 ];
 
-export { proposalData, jobCard };
+export { proposalData, jobCard, transHistory, bankCards };

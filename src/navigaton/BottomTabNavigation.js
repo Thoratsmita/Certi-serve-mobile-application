@@ -6,6 +6,7 @@ import JobsScreen from "../screens/JobsScreen";
 import Profile_Servee from "../screens/Profile_Servee";
 import Profile_Server from "../screens/Profile_Server";
 import HomeScreen from "../screens/HomeScreen";
+import FinancialDashboard from "../screens/FinancialDashboard";
 import JobsStackNavigation from "./JobStackNavigation";
 import colors from "../config/colors";
 
@@ -51,7 +52,7 @@ const BottomTabNavigation = () => {
       />
       <Bottom.Screen
         name="Dashboard"
-        component={JobsScreen}
+        component={FinancialDashboard}
         options={({ route }) => ({
           tabBarIcon: ({ color, focused, size }) =>
             focused ? (
