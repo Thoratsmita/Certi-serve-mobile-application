@@ -3,7 +3,14 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import colors from "../config/colors";
 import Box from "./Box";
 
-export default function MilestoneCard({ status, route, index, last }) {
+export default function MilestoneCard({
+  status,
+  route,
+  index,
+  last,
+  title,
+  descs,
+}) {
   const topics = ["Time", "Amount"];
   const TextColor = (e) => {
     if (e === "Pending") return "#ff0000";
@@ -24,13 +31,10 @@ export default function MilestoneCard({ status, route, index, last }) {
         { marginTop: index === 1 ? 30 : 10, marginBottom: last ? 30 : 10 },
       ]}
     >
-      <Text style={styles.headerText}>{index}. Milestone Description</Text>
-      <Text>
-        Aute proident dolore anim adipisicing commodo consequat cillum velit
-        qui. Aute est nostrud incididunt exercitation ex sunt excepteur dolor
-        mollit sit cupidatat. Ut sunt eiusmod eu pariatur nulla dolore proident.
-        Esse laborum labore non id nostrud.
+      <Text style={styles.headerText}>
+        {index}. {title}
       </Text>
+      <Text>{descs}</Text>
       {/* Footer */}
       <View style={[styles.footer, { justifyContent: "space-between" }]}>
         {/* <View style={styles.footer}> */}

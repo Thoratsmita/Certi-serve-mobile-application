@@ -1,38 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import colors from "../../config/colors";
 import Box from "../Box";
 import MilestoneCard from "../MilestoneCard";
 
 export default function ManagementTab({ route }) {
-  const data = [
-    {
-      id: 1,
-      status: "Pending",
-    },
-    {
-      id: 2,
-      status: "Not requested",
-    },
-    {
-      id: 3,
-      status: "Not requested",
-    },
-  ];
-  const approvedData = [
-    {
-      id: 1,
-      status: "Yet to release",
-    },
-    {
-      id: 2,
-      status: "Yet to release",
-    },
-    {
-      id: 3,
-      status: "Released",
-    },
-  ];
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch("http://radiant-bastion-14577.herokuapp.com/api/milestonesdisplay")
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  }, []);
+
   const ListHeaderComponent = () => {
     return (
       <View style={styles.footer}>
@@ -64,7 +44,7 @@ export default function ManagementTab({ route }) {
   return (
     <View style={styles.container}>
       <FlatList
-        data={approvedData}
+        data={data}
         // style={{ paddingVertical: 20 }}
         showsVerticalScrollIndicator={false}
         keyExtractor={(data) => data.id.toString()}
@@ -81,6 +61,8 @@ export default function ManagementTab({ route }) {
             }
             last={index + 1 === data.length}
             route={route.name}
+            title={item.milestone_name}
+            descs={item.milestone_description}
           />
         )}
       />
