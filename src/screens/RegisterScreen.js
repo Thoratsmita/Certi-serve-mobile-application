@@ -51,12 +51,12 @@ export default function RegisterScreen({
     }
 
     var dataToSend = {
-      Username: userName,
+      username: userName,
       name: userName,
       email: userEmail,
-      PhoneNumber: userNum,
+      phone_no: userNum,
       password: userPass,
-      UserType: userType,
+      user_type: userType,
     };
     var formBody = [];
     for (var key in dataToSend) {
@@ -67,7 +67,7 @@ export default function RegisterScreen({
     formBody = formBody.join("&");
 
     fetch("http://radiant-bastion-14577.herokuapp.com/api/userscreate", {
-      method: "PUT",
+      method: "POST",
       body: formBody,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
