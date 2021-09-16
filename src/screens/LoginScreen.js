@@ -7,9 +7,66 @@ import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ReCaptcha from "react-native-recaptcha-v3";
 
-export default function LoginScreen({ navigation: { navigate, goBack }, route }) {
+export default function LoginScreen({
+  navigation: { navigate, goBack },
+  route,
+}) {
   const [checked, setChecked] = useState(false);
   const { userType, otherParam } = route.params;
+  const [userEmail, setUserEmail] = useState("");
+  const [userPass, setUserPass] = useState("");
+
+  const handleLoginButton = () => {
+    if (!userEmail) {
+      alert("Please fill Email");
+      return;
+    }
+
+    if (!userPass) {
+      alert("Please fill Password");
+      return;
+    }
+
+    var dataToSend = {
+      email: userEmail,
+      password: userPass,
+    };
+    var formBody = [];
+    for (var key in dataToSend) {
+      var encodedKey = encodeURIComponent(key);
+      var encodedValue = encodeURIComponent(dataToSend[key]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch("http://radiant-bastion-14577.herokuapp.com/api/login", {
+      method: "POST",
+      body: formBody,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
+      .then((response) => response.text())
+      .then((responseJson) => {
+        console.log(responseJson);
+        if (responseJson==="You are Logged in")
+        {
+          alert("Logged In!")
+          navigate("Membership")
+
+        }
+
+        else {
+          alert("Wrong Email Or Password!")
+        }
+      })
+
+      
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const circleAvatar = ({ icon, color }) => {
     return (
       <View style={{ margin: 5 }}>
@@ -33,8 +90,16 @@ export default function LoginScreen({ navigation: { navigate, goBack }, route })
       </View>
       <View style={styles.form}>
         <Text style={styles.title}>Login</Text>
-        <AppTextInput icon="home" placeholder="Enter Your Email" />
-        <AppTextInput icon="wrench" placeholder="password" />
+        <AppTextInput
+          icon="home"
+          placeholder="Enter Your Email"
+          onChangeText={(UserEmail) => setUserEmail(UserEmail)}
+        />
+        <AppTextInput
+          icon="wrench"
+          placeholder="password"
+          onChangeText={(userPass) => setUserPass(userPass)}
+        />
         <View style={styles.formFooter}>
           <TouchableOpacity
             onPress={() => setChecked(!checked)}
@@ -56,7 +121,7 @@ export default function LoginScreen({ navigation: { navigate, goBack }, route })
           )}
         /> */}
 
-        <SubmitButton title="Login" onPress={() => navigate("Membership")} />
+        <SubmitButton title="Login" onPress={() => handleLoginButton()} />
         <Text style={[styles.title, { fontSize: 15 }]}>--Or--</Text>
         <Text
           style={[styles.title, { textTransform: "capitalize", fontSize: 20 }]}
@@ -68,7 +133,7 @@ export default function LoginScreen({ navigation: { navigate, goBack }, route })
           {circleAvatar({ icon: "facebook-with-circle", color: "blue" })}
         </View>
         <TouchableOpacity
-          onPress={() => navigate("Register", {usertype: userType})}
+          onPress={() => navigate("Register", { usertype: userType })}
           style={{ flexDirection: "row" }}
         >
           <Text
