@@ -1,20 +1,44 @@
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import AppTextInput from "../components/AppTextInput";
 import SubmitButton from "../components/SubmitButton";
 import { Entypo as Icon } from "@expo/vector-icons";
 import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import ReCaptcha from "react-native-recaptcha-v3";
+import ConfirmGoogleCaptcha from "react-native-google-recaptcha-v2";
 
 export default function LoginScreen({
   navigation: { navigate, goBack },
   route,
 }) {
+  const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
+  const baseUrl = "https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
   const [checked, setChecked] = useState(false);
   const { userType, otherParam } = route.params;
   const [userEmail, setUserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
+
+  onMessage = (event) => {
+    if (event && event.nativeEvent.data) {
+      if (["cancel", "error", "expired"].includes(event.nativeEvent.data)) {
+        this.captchaForm.hide();
+        return;
+      } else {
+        console.log("Verified code from Google", event.nativeEvent.data);
+        setTimeout(() => {
+          this.captchaForm.hide();
+          handleLoginButton();
+        }, 1500);
+      }
+    }
+  };
 
   const handleLoginButton = () => {
     if (!userEmail) {
@@ -49,19 +73,14 @@ export default function LoginScreen({
       .then((response) => response.text())
       .then((responseJson) => {
         console.log(responseJson);
-        if (responseJson==="You are Logged in")
-        {
-          alert("Logged In!")
-          navigate("Membership")
-
-        }
-
-        else {
-          alert("Wrong Email Or Password!")
+        if (responseJson === "You are Logged in") {
+          alert("Logged In!");
+          navigate("Membership");
+        } else {
+          alert("Wrong Email Or Password!");
         }
       })
 
-      
       .catch((error) => {
         console.error(error);
       });
@@ -112,16 +131,16 @@ export default function LoginScreen({
           </TouchableOpacity>
           <Text style={{ color: "#fff" }}>Forgot Password?</Text>
         </View>
-        {/* <ReCaptcha
-          url="https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-          key="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-          // containerStyle={{ height: 100 }}
-          onExecute={() => (
-            "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI", { action: "submit" }
-          )}
-        /> */}
 
-        <SubmitButton title="Login" onPress={() => handleLoginButton()} />
+        <ConfirmGoogleCaptcha
+          ref={(_ref) => (this.captchaForm = _ref)}
+          siteKey={siteKey}
+          baseUrl={baseUrl}
+          languageCode="en"
+          onMessage={this.onMessage}
+        />
+
+        <SubmitButton title="Login" onPress={() => this.captchaForm.show()} />
         <Text style={[styles.title, { fontSize: 15 }]}>--Or--</Text>
         <Text
           style={[styles.title, { textTransform: "capitalize", fontSize: 20 }]}

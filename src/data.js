@@ -36,15 +36,45 @@ const transHistory = [
   {
     id: 2,
     company: "Google",
-    category: "Services",
+    category: "Backend Developer",
     amount: "₦120.00",
   },
 
   {
     id: 3,
     company: "Dell",
-    category: "Services",
+    category: "Data Analyst",
     amount: "₦120.00",
+  },
+];
+
+const inboxMessage = [
+  {
+    id: 1,
+    name: "Dave Smith",
+    category: "Freelance Designer",
+    unread: "1",
+  },
+
+   {
+    id: 2,
+    name: "Bill Ray",
+    category: "System Engineer",
+    unread: "3",
+  },
+
+   {
+    id: 3,
+    name: "Jane Doe",
+    category: "Graphic Designer",
+    unread: "1",
+  },
+
+   {
+    id: 4,
+    name: "John Doe",
+    category: "App Developer",
+    unread: "1",
   },
 ];
 
@@ -110,4 +140,4 @@ const jobCard = [
   },
 ];
 
-export { proposalData, jobCard, transHistory, bankCards };
+export { proposalData, jobCard, transHistory, bankCards,inboxMessage };

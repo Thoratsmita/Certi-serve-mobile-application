@@ -3,6 +3,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import JobsScreen from "../screens/JobsScreen";
+import InboxScreen from "../screens/InboxScreen";
 import Profile_Servee from "../screens/Profile_Servee";
 import Profile_Server from "../screens/Profile_Server";
 import HomeScreen from "../screens/HomeScreen";
@@ -36,7 +37,7 @@ const BottomTabNavigation = () => {
       />
       <Bottom.Screen
         name="Inbox"
-        component={JobsScreen}
+        component={InboxScreen}
         options={({ route }) => ({
           tabBarIcon: ({ color, focused, size }) =>
             focused ? (

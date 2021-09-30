@@ -18,6 +18,7 @@ export default function TransCard({
   backgroundColor,
   onPress,
   amount,
+  amtStyle
 }) {
   return (
     <TouchableOpacity
@@ -35,7 +36,7 @@ export default function TransCard({
           <View>
             <Text style={{ fontSize: 20 }}>{title}</Text>
             <Text style={{ fontSize: 12 }}>{subtitle}</Text>
-            <Text style={{ fontSize: 20, left: 150, bottom: 25 }}>
+            <Text style={amtStyle}>
               {amount}
             </Text>
           </View>

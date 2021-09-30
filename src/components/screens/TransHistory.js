@@ -16,6 +16,7 @@ export default function TransHistory({ data = [] }) {
             title={item.company}
             subtitle={item.category}
             amount={item.amount}
+            amtStyle={{ fontSize: 20, left: 150, bottom: 25 }}
             // image={item.image}
             backgroundColor="gray"
           />
