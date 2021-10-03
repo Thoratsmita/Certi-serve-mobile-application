@@ -15,8 +15,8 @@ const MessageTopTabNavigation = ({ onPress }) => {
   return (
     <Top.Navigator
       tabBarOptions={{
-        labelStyle: { fontSize: 12, top: 10 },
-        tabStyle: { borderRadius: 10, height: 80 },
+        labelStyle: { fontSize: 14, top: 12,fontWeight:'bold'},
+        tabStyle: { borderRadius: 10, height: 70 },
         style: { width: "100%", overflow: "hidden" },
         activeTintColor: "green",
         inactiveTintColor: "black",

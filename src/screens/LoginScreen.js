@@ -78,6 +78,7 @@ export default function LoginScreen({
           navigate("Membership");
         } else {
           alert("Wrong Email Or Password!");
+
         }
       })
 

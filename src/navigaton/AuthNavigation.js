@@ -14,6 +14,8 @@ import BottomTabNavigation from "./BottomTabNavigation";
 import MembershipScreen from "../screens/MembershipScreen";
 import PlanScreen from "../screens/PlanScreen";
 import PaymentScreen from "../screens/PaymentScreen";
+import InterMessageScreen from "../screens/InterMessageScreen";
+
 
 
 const AuthNavigation = () => {
@@ -37,6 +39,8 @@ const AuthNavigation = () => {
       <Stack.Screen name="Plans" component={PlanScreen} />
       <Stack.Screen name="Payment" component={PaymentScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="InterMessageScreen" component={InterMessageScreen} />
+
      
       {/* <Stack.Screen name="Jobs" component={AllJobsScreen} /> */}
       <Stack.Screen name="Home" component={HomeScreen} />
