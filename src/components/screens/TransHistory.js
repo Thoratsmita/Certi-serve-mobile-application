@@ -22,36 +22,7 @@ export default function TransHistory({ data = [] }) {
           />
         )}
       />
-      <Pressable style={{ top: 20, left: 30 }}>
-        <Text
-          style={{
-            borderRadius: 10,
-            backgroundColor: colors.primary,
-            padding: 10,
-            width: "28%",
-            color: "white",
-            fontSize: 15,
-          }}
-        >
-          {" "}
-          Add Fund
-        </Text>
-      </Pressable>
-      <Pressable style={{ left: 235, bottom: 20 }}>
-        <Text
-          style={{
-            borderRadius: 10,
-            backgroundColor: "gray",
-            padding: 10,
-            width: "28%",
-            color: "white",
-            fontSize: 15,
-          }}
-        >
-          {" "}
-          Withdraw
-        </Text>
-      </Pressable>
+
     </View>
   );
 }

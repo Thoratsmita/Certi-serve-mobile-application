@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,7 +12,7 @@ import {
 import AppTextInput from "../components/AppTextInput";
 import SubmitButton from "../components/SubmitButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import ConfirmGoogleCaptcha from "react-native-google-recaptcha-v2";
 import colors from "../config/colors";
 
 export default function RegisterScreen({
@@ -26,6 +26,24 @@ export default function RegisterScreen({
   const [userPass, setUserPass] = useState("");
   const [conuserPass, setconUserPass] = useState("");
   const [userType, setUserType] = useState(usertype);
+  const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
+  const baseUrl =
+    "https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
+
+  onMessage = (event) => {
+    if (event && event.nativeEvent.data) {
+      if (["cancel", "error", "expired"].includes(event.nativeEvent.data)) {
+        this.captchaForm.hide();
+        return;
+      } else {
+        console.log("Verified code from Google", event.nativeEvent.data);
+        setTimeout(() => {
+          this.captchaForm.hide();
+          handleRegisterButton();
+        }, 1500);
+      }
+    }
+  };
 
   const handleRegisterButton = () => {
     if (!userName) {
@@ -131,9 +149,16 @@ export default function RegisterScreen({
             placeholder="Confirm Password"
             onChangeText={(conuserPass) => setconUserPass(conuserPass)}
           />
+          <ConfirmGoogleCaptcha
+            ref={(_ref) => (captchaForm = _ref)}
+            siteKey={siteKey}
+            baseUrl={baseUrl}
+            languageCode="en"
+            onMessage={onMessage}
+          />
           <SubmitButton
             title="Register Me!"
-            onPress={() => handleRegisterButton()}
+            onPress={() => captchaForm.show()}
           />
           {/* <View style={{ alignSelf: "flex-end" }}> */}
           <TouchableOpacity

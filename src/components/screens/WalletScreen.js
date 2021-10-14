@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, Text, View, TextInput } from "react-native";
+import { FlatList, StyleSheet, Text, View, TextInput, ScrollView,Pressable } from "react-native";
 import CircleAvatar from "../CircleAvatar";
 import { transHistory } from "../../data";
 import colors from "../../config/colors";
@@ -9,7 +9,7 @@ export default function WalletScreen() {
   const [balance, setBalance] = useState("120.60");
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={{ top: 20, left: 25, fontSize: 19, color: "gray" }}>
         Current Balance
       </Text>
@@ -29,8 +29,8 @@ export default function WalletScreen() {
       <View
         style={{
           backgroundColor: colors.primary,
-          width: "80%",
-          left: 30,
+          width: "85%",
+          left: 27,
           borderRadius: 10,
           height: "23%",
           bottom: 75,
@@ -51,11 +51,22 @@ export default function WalletScreen() {
           Your Spending
         </Text>
       </View>
-      <Text style={{ left: 25, fontSize: 19, color: "gray", bottom: 50 }}>
-        Wallet Transactions
-      </Text>
-      <TransHistory data={transHistory} />
-    </View>
+      <View style={{bottom:50,height:320}}>
+        <Text style={{ left: 25, fontSize: 19, color: "gray",}}>
+          Wallet Transactions
+        </Text>
+        <TransHistory data={transHistory} />
+      </View>
+      <View style={{flexDirection:'row',height: 200,padding: 20,justifyContent: 'space-between',bottom:25}}>
+        <Pressable style={{left:30}}>
+          <Text style={{fontSize: 18,borderRadius: 10,backgroundColor: colors.primary,color: 'white',padding:10}}>Add Funds</Text>
+        </Pressable>
+        <Pressable style={{right:30}}>
+          <Text style={{fontSize: 18,borderRadius: 10,backgroundColor: colors.primary,color: 'white',padding:10}}>Withdraw</Text>
+        </Pressable>
+      </View>
+
+    </ScrollView>
   );
 }
 
