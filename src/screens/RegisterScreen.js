@@ -95,9 +95,11 @@ export default function RegisterScreen({
       .then((responseJson) => {
         console.log(responseJson);
 
-        if (responseJson === 1) {
+        if (responseJson.msg === "User created successfully") {
           alert("Registration Successful!");
           navigate("Login");
+        }else{
+          alert(responseJson);
         }
       })
       .catch((error) => {

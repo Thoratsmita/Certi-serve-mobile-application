@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import JobCard from "../JobCard";
 import colors from "../../config/colors";
@@ -9,7 +9,6 @@ export default function JobProposalScreen({
   title,
   count = 0,
   onEmptyText,
-  data = [],
   onPress,
   onPressPostJob,
   // route,
@@ -22,7 +21,32 @@ export default function JobProposalScreen({
       </View>
     );
   };
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    jobFetcher()
+  }, []);
+
   const route = useRoute();
+
+  jobFetcher = () => {
+    fetch("http://radiant-bastion-14577.herokuapp.com/api/jobsdisplay", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //console.log(responseJson);
+        setData(responseJson);
+      })
+
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  //console.log(data[0]);
   // console.log(route.name);
   return (
     <>
@@ -55,15 +79,15 @@ export default function JobProposalScreen({
           <FlatList
             ListHeaderComponent={ListHeaderComponent}
             data={data}
-            keyExtractor={(data) => data.id.toString()}
+            keyExtractor={(item, index) => item.id}
             renderItem={({ item }) => (
               <JobCard
-                title={item.title}
-                subtitle={item.subtitle}
-                range={item.range}
+                title={item.job_title}
+                subtitle={item.job_title}
+                range={item.job_incentives}
                 // image={item.image}
                 backgroundColor="red"
-                topics={item.topics}
+                //topics={item.job_title}
                 onPress={onPress}
               />
             )}

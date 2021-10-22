@@ -22,7 +22,6 @@ const JobTopTabNavigation = ({ onPress, onPressPostJob }) => {
             title="All Jobs"
             onEmptyText="Ahh! No Jobs"
             count={2}
-            data={jobCard}
             onPress={onPress}
           />
         )}

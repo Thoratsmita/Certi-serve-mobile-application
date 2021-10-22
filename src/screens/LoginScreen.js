@@ -19,7 +19,8 @@ export default function LoginScreen({
   route,
 }) {
   const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
-  const baseUrl = "https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
+  const baseUrl =
+    "https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
   const [checked, setChecked] = useState(false);
   const { userType, otherParam } = route.params;
   const [userEmail, setUserEmail] = useState("");
@@ -70,16 +71,18 @@ export default function LoginScreen({
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
       },
     })
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
-        if (responseJson === "You are Logged in") {
+        if (responseJson.access_token) {
           alert("Logged In!");
-          navigate("Membership");
+          if (responseJson.user.user_type === "Server") {
+            navigate("Membership");
+          } else {
+            navigate("App");
+          }
         } else {
           alert("Wrong Email Or Password!");
-          navigate("Membership");
-
         }
       })
 
@@ -118,7 +121,8 @@ export default function LoginScreen({
         />
         <AppTextInput
           icon="wrench"
-          placeholder="password"
+          placeholder="Password"
+          secureTextEntry={true}
           onChangeText={(userPass) => setUserPass(userPass)}
         />
         <View style={styles.formFooter}>
