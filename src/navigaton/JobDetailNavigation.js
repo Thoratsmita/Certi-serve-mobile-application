@@ -9,7 +9,7 @@ import AllProposalScreen from "../components/screens/AllProposalScreen";
 import YourProposalsScreen from "../components/screens/YourProposalsScreen";
 import ManagementScreen from "../components/screens/ManagementScreen";
 
-const JobDetailNavigation = ({ onPress }) => {
+const JobDetailNavigation = ({ onPress,item }) => {
   const Top = createMaterialTopTabNavigator();
   return (
     <Top.Navigator
@@ -25,7 +25,7 @@ const JobDetailNavigation = ({ onPress }) => {
         // style: { paddingHorizontal: 10 },
       }}
     >
-      <Top.Screen name="Detail" component={DetailScreen} />
+      <Top.Screen name="Details">{() => <DetailScreen item={item}/>}</Top.Screen>
       <Top.Screen name="All Proposals" component={AllProposalScreen} />
       <Top.Screen name="Your Proposals" component={YourProposalsScreen} />
       <Top.Screen name="Management" component={ManagementScreen} />

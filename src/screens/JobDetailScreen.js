@@ -5,11 +5,12 @@ import JobDetailNavigation from "../navigaton/JobDetailNavigation";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../config/colors";
 
-export default function JobDetailScreen({ navigation: { goBack } }) {
+export default function JobDetailScreen({ navigation: { goBack }, route }) {
+  const { item } = route.params;
   return (
     <View style={styles.container}>
       <Header onBack={() => goBack()} />
-      <JobDetailNavigation />
+      <JobDetailNavigation item={item}/>
     </View>
   );
 }

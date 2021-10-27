@@ -10,6 +10,7 @@ const JobTopTabNavigation = ({ onPress, onPressPostJob }) => {
 
   return (
     <Top.Navigator
+      TabNavigatorConfig={{lazy:false}}
       tabBarOptions={{
         labelStyle: { fontSize: 12, textTransform: "capitalize" },
         // tabStyle: { width: "80%" },
@@ -29,9 +30,10 @@ const JobTopTabNavigation = ({ onPress, onPressPostJob }) => {
       <Top.Screen name="Open">
         {() => (
           <JobProposalScreen
-            title="Currently open jobs"
-            onEmptyText="Ahh! Currently no open projects "
-            data={jobCard}
+            title="Currently Open Jobs"
+            onEmptyText="Ahh! No Open Jobs"
+            count={2}
+            onPress={onPress}
           />
         )}
       </Top.Screen>

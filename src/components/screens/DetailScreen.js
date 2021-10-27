@@ -3,13 +3,13 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import colors from "../../config/colors";
 import SubmitButton from "../SubmitButton";
 
-export default function DetailScreen() {
+export default function DetailScreen({item}) {
   return (
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.headerText}>
           Title :{" "}
-          <Text style={{ color: "#000" }}>Freelance graphic designer</Text>
+          <Text style={{ color: "#000" }}>{item.job_title}</Text>
         </Text>
         {/* End of Header Text */}
 
@@ -19,7 +19,7 @@ export default function DetailScreen() {
             Sub-category
           </Text>
           <Text style={[styles.headerText, { color: "#000" }]}>
-            Hauz khas, New Delhi, 110016
+            {item.job_location}
           </Text>
         </View>
         {/* End of Category */}
@@ -28,10 +28,7 @@ export default function DetailScreen() {
           <Text style={[styles.headerText]}>Details</Text>
           <View style={styles.detailContainer}>
             <Text>
-              Aliqua non ullamco consequat laborum eu commodo consectetur
-              deserunt commodo cupidatat commodo consectetur. Non aute tempor
-              reprehenderit fugiat. Labore Lorem reprehenderit deserunt esse
-              dolor ad velit tempor sunt. Nostrud ad sunt deserunt eu.
+              {item.job_description}
             </Text>
           </View>
         </View>
@@ -42,14 +39,10 @@ export default function DetailScreen() {
           <View style={{ flexDirection: "row" }}>
             <View style={styles.doc}>
               <View style={styles.docFooter}>
-                <Text>xyz.pdf</Text>
+                <Text>{item.job_docs}</Text>
               </View>
             </View>
-            <View style={styles.doc}>
-              <View style={styles.docFooter}>
-                <Text>ABC.docx</Text>
-              </View>
-            </View>
+            
           </View>
         </View>
         {/* End of Details */}
@@ -61,7 +54,7 @@ export default function DetailScreen() {
           }}
         >
           <View style={styles.box}>
-            <Text style={styles.headerText}>Avg. Bid : ₦87</Text>
+            <Text style={styles.headerText}>Avg. Bid : ₦{item.job_incentives}</Text>
           </View>
           <View style={styles.box}>
             <Text style={{ fontSize: 18, color: "#000", fontWeight: "bold" }}>

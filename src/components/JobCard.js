@@ -35,7 +35,7 @@ export default function JobCard({
             backgroundColor={backgroundColor}
           />
           <View>
-            <Text style={{ fontSize: 20 }}>{title}</Text>
+            <Text style={{ fontSize: 20,width:200 }}>{title}</Text>
             <Text style={{ fontSize: 12 }}>{subtitle}</Text>
             <Text style={{ fontSize: 12, color: colors.primary }}>
               {range}/Hour
@@ -75,7 +75,7 @@ export default function JobCard({
           padding={10}
           textColor="#fff"
           padding={15}
-          style={{ alignSelf: "flex-end" }}
+          style={{ alignSelf: "flex-end",bottom:7 }}
         />
       </View>
       {/* </View> */}

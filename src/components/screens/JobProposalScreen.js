@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import JobCard from "../JobCard";
 import colors from "../../config/colors";
 import SubmitButton from "../SubmitButton";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useNavigation} from "@react-navigation/native";
 
 export default function JobProposalScreen({
   title,
@@ -13,6 +13,7 @@ export default function JobProposalScreen({
   onPressPostJob,
   // route,
 }) {
+  const navigation = useNavigation();
   const ListHeaderComponent = () => {
     return (
       <View style={styles.header}>
@@ -23,11 +24,13 @@ export default function JobProposalScreen({
   };
 
   const [data, setData] = useState([]);
-  useEffect(() => {
-    jobFetcher()
-  }, []);
+  componentDidMount(){
+    
+    this.focusListener = navigation.addListener("focus", () => {      
+      jobFetcher();     
+    });
+  }
 
-  const route = useRoute();
 
   jobFetcher = () => {
     fetch("http://radiant-bastion-14577.herokuapp.com/api/jobsdisplay", {
@@ -79,16 +82,16 @@ export default function JobProposalScreen({
           <FlatList
             ListHeaderComponent={ListHeaderComponent}
             data={data}
-            keyExtractor={(item, index) => item.id}
+            keyExtractor={(item, index) => item.id.toString()}
             renderItem={({ item }) => (
               <JobCard
                 title={item.job_title}
-                subtitle={item.job_title}
+                subtitle={item.job_location}
                 range={item.job_incentives}
                 // image={item.image}
                 backgroundColor="red"
-                //topics={item.job_title}
-                onPress={onPress}
+                topics={item.tags}
+                onPress={() => navigation.navigate("JobDetail", { item:item })}
               />
             )}
           />
