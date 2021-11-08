@@ -3,17 +3,22 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import JobCard from "../JobCard";
 import colors from "../../config/colors";
 import SubmitButton from "../SubmitButton";
-import { useRoute, useNavigation} from "@react-navigation/native";
+import { useRoute, useNavigation,useIsFocused } from "@react-navigation/native";
 
 export default function JobProposalScreen({
   title,
-  count = 0,
+  count,
   onEmptyText,
   onPress,
   onPressPostJob,
   // route,
 }) {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    jobFetcher();
+  }, [isFocused]);
+
   const ListHeaderComponent = () => {
     return (
       <View style={styles.header}>
@@ -24,15 +29,8 @@ export default function JobProposalScreen({
   };
 
   const [data, setData] = useState([]);
-  componentDidMount(){
-    
-    this.focusListener = navigation.addListener("focus", () => {      
-      jobFetcher();     
-    });
-  }
 
-
-  jobFetcher = () => {
+  const jobFetcher = () => {
     fetch("http://radiant-bastion-14577.herokuapp.com/api/jobsdisplay", {
       method: "GET",
       headers: {
@@ -41,7 +39,7 @@ export default function JobProposalScreen({
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        //console.log(responseJson);
+        console.log(responseJson);
         setData(responseJson);
       })
 
@@ -54,7 +52,7 @@ export default function JobProposalScreen({
   return (
     <>
       <View style={styles.container}>
-        {data.length === 0 && (
+        {(data.length === 0 || count==0) && (
           <>
             {title && (
               <View style={styles.header}>
@@ -78,7 +76,7 @@ export default function JobProposalScreen({
             </View>
           </>
         )}
-        {data.length > 0 && (
+        {(data.length > 0 && count!=0) && (
           <FlatList
             ListHeaderComponent={ListHeaderComponent}
             data={data}
@@ -91,7 +89,7 @@ export default function JobProposalScreen({
                 // image={item.image}
                 backgroundColor="red"
                 topics={item.tags}
-                onPress={() => navigation.navigate("JobDetail", { item:item })}
+                onPress={() => navigation.navigate("JobDetail", { item: item })}
               />
             )}
           />

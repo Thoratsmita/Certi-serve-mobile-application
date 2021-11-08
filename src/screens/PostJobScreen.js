@@ -39,18 +39,14 @@ export default function PostJobScreen({ navigation: { goBack } }) {
     }
 
     var dataToSend = {
-      job_title: jobTitle,
       job_description: jobDesc,
-      job_type: "pqr",
-      server_id:12,
-      servee_id:14,
-      skill_id:4,
-      minimum_experience:2,
-      job_duration:2,
-      freelancer_preference:"yes",
-      job_incentives:1000,
-      date_posted: "2021-01-04",
-    
+      job_location: "Mumbai",
+      job_title: jobTitle,
+      servee_id: 3,
+      skill_id: 1,
+      subcategory_id: 4,
+      job_incentives:6666,
+      status:"active",
     };
     var formBody = [];
     for (var key in dataToSend) {
@@ -78,7 +74,6 @@ export default function PostJobScreen({ navigation: { goBack } }) {
       });
   };
 
-  
   const ModalCell = ({ placeholder, endIcon, title, editable, onPress }) => {
     return (
       <View style={[styles.cell, { marginVertical: 8 }]}>
@@ -177,7 +172,7 @@ export default function PostJobScreen({ navigation: { goBack } }) {
               numberOfLines={10}
               style={{ textAlignVertical: "top" }}
               onChangeText={(jobDesc) => setJobDesc(jobDesc)}
-              defaultValue="Et deserunt occaecat enim Amet aliquip excepteur ea ea culpa reprehenderit aute sint esse anim est. Incididunt sint dolore consectetur qui do adipisicing magna. Nisi mollit enim est magna cupidatat occaecat voluptate id. Proident ad officia laborum anim dolore ipsum. Ad magna aliqua anim mollit aliqua cillum et ipsum veniam commodo velit ea.ut pariatur nulla Lorem minim esse Lorem commodo cillum. Sint quis pariatur ad exercitation duis ea fugiat laborum eiusmod dolore sunt pariatur irure. Ex qui non nostrud eiusmod laboris in."
+              defaultValue="ation duis ea fugiat laborum eiusmod dolore sunt pariatur irure. Ex qui non nostrud eiusmod laboris in."
             />
           </View>
         </View>

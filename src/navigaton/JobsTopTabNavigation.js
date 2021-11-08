@@ -6,7 +6,7 @@ import JobProposalScreen from "../components/screens/JobProposalScreen";
 import { jobCard } from "../data";
 
 const JobTopTabNavigation = ({ onPress, onPressPostJob }) => {
-  const Top = createMaterialTopTabNavigator();
+const Top = createMaterialTopTabNavigator();
 
   return (
     <Top.Navigator
@@ -40,9 +40,10 @@ const JobTopTabNavigation = ({ onPress, onPressPostJob }) => {
       <Top.Screen name="In Progress">
         {() => (
           <JobProposalScreen
-            // title="Currently open jobs"
-            onEmptyText="You have not posted any Job"
+            //title="Currently open jobs"
+            onEmptyText="Post Jobs Now"
             // data={jobCard.slice(1, 4)}
+            count={0}
             onPressPostJob={onPressPostJob}
           />
         )}

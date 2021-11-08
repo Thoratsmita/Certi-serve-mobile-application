@@ -30,6 +30,18 @@ export default function DetailScreen({item}) {
             <Text>
               {item.job_description}
             </Text>
+            <Text>
+              Minimum Experience: {item.minimum_experience} Years.
+            </Text>
+            <Text>
+              Job Incentives: {item.job_incentives} Naira.
+            </Text>
+            <Text>
+              Language Required: {item.language}
+            </Text>
+            <Text>
+              Job Duration: {item.job_duration}
+            </Text>
           </View>
         </View>
         {/* End of Details */}

@@ -8,6 +8,7 @@ export default function AppTextInput({
   icon,
   width = "100%",
   end,
+  secure=false,
   editable = true,
   onChangeText,
 }) {
@@ -19,6 +20,7 @@ export default function AppTextInput({
         placeholder={placeholder}
         style={styles.text}
         onChangeText={onChangeText}
+        secureTextEntry={secure}
         
       />
       {end && <Text style={styles.endText}>{end}</Text>}

@@ -69,7 +69,7 @@ export default function Profile_Server({ navigation: { goBack } }) {
           name="edit"
           size={23}
           color="gray"
-          onPress={() => setEdit(!edit)}
+          onPress={() => alert("Any changes will need to be verified by Admin.")}
         />
       </View>
       <View style={{ flex: 1, bottom: 190 }}>

@@ -77,9 +77,9 @@ export default function LoginScreen({
         if (responseJson.access_token) {
           alert("Logged In!");
           if (responseJson.user.user_type === "Server") {
-            navigate("Membership");
+            navigate("Membership",{ user: responseJson.user });
           } else {
-            navigate("App");
+            navigate("App",{ user: responseJson.user });
           }
         } else {
           alert("Wrong Email Or Password!");
@@ -122,7 +122,7 @@ export default function LoginScreen({
         <AppTextInput
           icon="wrench"
           placeholder="Password"
-          secureTextEntry={true}
+          secure={true}
           onChangeText={(userPass) => setUserPass(userPass)}
         />
         <View style={styles.formFooter}>
