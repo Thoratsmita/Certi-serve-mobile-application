@@ -14,12 +14,14 @@ import JobsTopTabNavigation from "../navigaton/JobsTopTabNavigation";
 import CircleAvatar from "../components/CircleAvatar";
 import Header from "../components/Header";
 
-export default function HomeScreen({ navigation: { navigate } }) {
-  // console.log("ready");
+export default function HomeScreen({ navigation: { navigate },user}) {
+  
+  console.log(user.name)
   return (
     <View style={styles.container}>
-      <Header name="David Ray" userName="@davidray" />
+      <Header name={user.name} userName={user.username} />
       <JobsTopTabNavigation
+        user={user.user}
         onPress={() => navigate("JobDetail")}
         onPressPostJob={() => navigate("PostJob")}
       />

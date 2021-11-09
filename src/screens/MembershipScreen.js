@@ -14,12 +14,13 @@ import CircleAvatar from "../components/CircleAvatar";
 import Header from "../components/Header";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function MembershipScreen({ navigation: { navigate, goback } }) {
+export default function MembershipScreen({ navigation: { navigate, goback, },route}) {
+  const user = route.params;
   const cardData = [
     {
       title: "Basic",
       sub: "Free",
-      navTo: () => navigate("App"),
+      navTo: () => navigate("App",{ user: user.user }),
     },
     {
       title: "Premium",

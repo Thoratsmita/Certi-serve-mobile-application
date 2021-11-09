@@ -11,13 +11,15 @@ import FinancialDashboard from "../screens/FinancialDashboard";
 import JobsStackNavigation from "./JobStackNavigation";
 import colors from "../config/colors";
 
-const BottomTabNavigation = () => {
+const BottomTabNavigation = ({route}) => {
+
   const Bottom = createBottomTabNavigator();
+  const user = route.params;
+  //console.log(user.user.user.name)
   return (
     <Bottom.Navigator tabBarOptions={{ activeTintColor: colors.primary }}>
       <Bottom.Screen
         name="Jobs"
-        component={JobsStackNavigation}
         options={({ route }) => ({
           tabBarIcon: ({ color, focused, size }) =>
             focused ? (
@@ -34,7 +36,9 @@ const BottomTabNavigation = () => {
               />
             ),
         })}
-      />
+      >
+        {props => <JobsStackNavigation user={user.user} />}
+      </Bottom.Screen>
       <Bottom.Screen
         name="Inbox"
         component={InboxScreen}

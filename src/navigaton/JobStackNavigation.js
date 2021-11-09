@@ -10,8 +10,9 @@ import JobDetailNavigation from "./JobDetailNavigation";
 import JobDetailScreen from "../screens/JobDetailScreen";
 import PostJobScreen from "../screens/PostJobScreen";
 
-const JobsStackNavigation = () => {
+const JobsStackNavigation = ({user}) => {
   const Stack = createStackNavigator();
+  //console.log({user})
   return (
     <Stack.Navigator
       screenOptions={{
@@ -24,7 +25,7 @@ const JobsStackNavigation = () => {
       headerMode={false}
       //   initialRouteName="App"
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Home">{(props) => <HomeScreen {...props} user={user.user}/>}</Stack.Screen>
       <Stack.Screen name="JobDetail" component={JobDetailScreen} />
       <Stack.Screen name="PostJob" component={PostJobScreen} />
     </Stack.Navigator>

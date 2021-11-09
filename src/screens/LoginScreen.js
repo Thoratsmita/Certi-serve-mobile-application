@@ -73,13 +73,13 @@ export default function LoginScreen({
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson);
+        //console.log(responseJson);
         if (responseJson.access_token) {
           alert("Logged In!");
           if (responseJson.user.user_type === "Server") {
-            navigate("Membership",{ user: responseJson.user });
+            navigate("Membership",{ user: responseJson });
           } else {
-            navigate("App",{ user: responseJson.user });
+            navigate("App",{ user: responseJson });
           }
         } else {
           alert("Wrong Email Or Password!");

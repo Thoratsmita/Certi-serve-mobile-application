@@ -11,6 +11,7 @@ export default function JobProposalScreen({
   onEmptyText,
   onPress,
   onPressPostJob,
+  user
   // route,
 }) {
   const navigation = useNavigation();

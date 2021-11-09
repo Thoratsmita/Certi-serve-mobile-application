@@ -5,7 +5,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import JobProposalScreen from "../components/screens/JobProposalScreen";
 import { jobCard } from "../data";
 
-const JobTopTabNavigation = ({ onPress, onPressPostJob }) => {
+const JobTopTabNavigation = ({ onPress, onPressPostJob,user }) => {
 const Top = createMaterialTopTabNavigator();
 
   return (
@@ -24,6 +24,7 @@ const Top = createMaterialTopTabNavigator();
             onEmptyText="Ahh! No Jobs"
             count={2}
             onPress={onPress}
+            user={user.user}
           />
         )}
       </Top.Screen>
