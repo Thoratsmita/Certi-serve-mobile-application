@@ -16,6 +16,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function MembershipScreen({ navigation: { navigate, goback, },route}) {
   const user = route.params;
+  //console.log(user.user.name);
   const cardData = [
     {
       title: "Basic",
@@ -56,7 +57,7 @@ export default function MembershipScreen({ navigation: { navigate, goback, },rou
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
-        <Header topic=" " name="David Ray" userName="@davidray" icon="" />
+        <Header topic=" " name={user.user.user.name} userName={user.user.user.username} icon="" />
         <Text style={styles.title}>Membership</Text>
       </View>
 

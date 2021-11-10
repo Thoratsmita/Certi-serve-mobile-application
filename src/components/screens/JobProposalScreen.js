@@ -14,6 +14,8 @@ export default function JobProposalScreen({
   user
   // route,
 }) {
+  const [data, setData] = useState([]);
+  //console.log({user});
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   useEffect(() => {
@@ -29,23 +31,27 @@ export default function JobProposalScreen({
     );
   };
 
-  const [data, setData] = useState([]);
+
 
   const jobFetcher = () => {
     fetch("http://radiant-bastion-14577.herokuapp.com/api/jobsdisplay", {
       method: "GET",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        Accept: "application/json, text/plain, */*", // It can be used to overcome cors errors
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson);
+        //console.log(responseJson);
         setData(responseJson);
       })
 
       .catch((error) => {
+        console.log("brr");
         console.error(error);
+
+
       });
   };
   //console.log(data[0]);
@@ -88,9 +94,9 @@ export default function JobProposalScreen({
                 subtitle={item.job_location}
                 range={item.job_incentives}
                 // image={item.image}
-                backgroundColor="red"
+                backgroundColor="green"
                 topics={item.tags}
-                onPress={() => navigation.navigate("JobDetail", { item: item })}
+                onPress={() => navigation.navigate("JobDetail", { item: item, user:user})}
               />
             )}
           />

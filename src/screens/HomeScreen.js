@@ -16,12 +16,13 @@ import Header from "../components/Header";
 
 export default function HomeScreen({ navigation: { navigate },user}) {
   
-  console.log(user.name)
+  //console.log(user.name)
+  //const users = {user.user}
   return (
     <View style={styles.container}>
       <Header name={user.name} userName={user.username} />
       <JobsTopTabNavigation
-        user={user.user}
+        user={{user}}
         onPress={() => navigate("JobDetail")}
         onPressPostJob={() => navigate("PostJob")}
       />

@@ -4,7 +4,10 @@
     "slug": "certiServe",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": {
+      "image":"./assets/appIcon.jpg",
+      "resizeMode": "cover",
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

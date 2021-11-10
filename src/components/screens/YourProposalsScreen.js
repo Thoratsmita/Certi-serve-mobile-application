@@ -12,96 +12,14 @@ import SubmitButton from "../SubmitButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import YourProposalCard from "../YourProposalCard";
+import { useNavigation } from "@react-navigation/native";
 
-export default function YourProposalsScreen() {
-  const [modalVisible, setModalVisible] = useState(false);
+export default function YourProposalsScreen({item,user}) {
   const [showData, setShowData] = useState(false);
-  const BoxInput = ({
-    defaultValue,
-    flexDirection = "row",
-    placeholder,
-    blurText,
-  }) => (
-    <View style={styles.box}>
-      {blurText && <Text style={styles.blurText}>{blurText}</Text>}
-      <View
-        style={[styles.costInputContainer, { flexDirection: flexDirection }]}
-      >
-        <View style={styles.cost}>
-          <Text style={{ fontSize: 18 }}>​​{placeholder}</Text>
-        </View>
-        <TextInput defaultValue={defaultValue} style={[styles.costInput]} />
-      </View>
-    </View>
-  );
-  const MilestoneBlock = ({ defaultValueCost, milestoneCount }) => (
-    <View style={styles.block}>
-      <TextInput
-        multiline
-        numberOfLines={2}
-        defaultValue={"Milestone " + milestoneCount}
-        style={[styles.detailnput, { flex: 1, marginRight: 10 }]}
-      />
-      <BoxInput
-        defaultValue={defaultValueCost}
-        placeholder="​​₦"
-        flexDirection="row"
-      />
-    </View>
-  );
-  const ModalView = () => (
-    <Modal animationType="slide" visible={modalVisible}>
-      <ScrollView style={{ backgroundColor: "#f7f7f7" }}>
-        <TouchableOpacity
-          style={styles.icon}
-          onPress={() => setModalVisible(!modalVisible)}
-        >
-          <MaterialCommunityIcons
-            name="chevron-left"
-            size={40}
-            color={colors.primary}
-          />
-        </TouchableOpacity>
-        <View style={[styles.modalContainer, { flex: 1 }]}>
-          <Text style={styles.heading}>Place A Bid on this project</Text>
-          <BoxInput
-            defaultValue="140"
-            blurText="Bid Amount"
-            placeholder="​​₦"
-            flexDirection="row"
-          />
-          <BoxInput
-            defaultValue="12"
-            blurText="This project will be delivered in"
-            placeholder="​​Days"
-            flexDirection="row-reverse"
-          />
-          <Text style={styles.heading}>Describe your proposal</Text>
-          <TextInput
-            multiline
-            numberOfLines={10}
-            placeholder="What makes you the best candidate for this
-          project?"
-            style={styles.detailnput}
-          />
-          <Text style={styles.heading}>Suggest a milestone payment</Text>
-          <MilestoneBlock defaultValueCost="140" milestoneCount="1" />
-          <MilestoneBlock defaultValueCost="80" milestoneCount="2" />
-          <Text style={styles.blurText}>Add another milestone</Text>
-          <SubmitButton
-            title="Create Proposal"
-            textColor="#fff"
-            fontSize={16}
-            backgroundColor={colors.primary}
-            onPress={() => setModalVisible(!modalVisible)}
-          />
-        </View>
-      </ScrollView>
-    </Modal>
-  );
+  const navigation = useNavigation();
+  //console.log(user.id)
   return (
     <View style={styles.container}>
-      <ModalView />
       {showData ? (
         <YourProposalCard />
       ) : (
@@ -111,10 +29,7 @@ export default function YourProposalsScreen() {
           </Text>
           <SubmitButton
             title="Create A Proposal"
-            onPress={() => {
-              setModalVisible(!modalVisible);
-              setShowData(true);
-            }}
+            onPress={() => navigation.navigate("PostProposalScreen",{ user:user, item:item})}
             textColor="#fff"
             fontSize={16}
           />

@@ -15,6 +15,7 @@ import MembershipScreen from "../screens/MembershipScreen";
 import PlanScreen from "../screens/PlanScreen";
 import PaymentScreen from "../screens/PaymentScreen";
 import InterMessageScreen from "../screens/InterMessageScreen";
+import PostProposalScreen from "../components/screens/PostProposalScreen";
 
 
 
@@ -40,6 +41,7 @@ const AuthNavigation = () => {
       <Stack.Screen name="Payment" component={PaymentScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="InterMessageScreen" component={InterMessageScreen} />
+      <Stack.Screen name="PostProposalScreen" component={PostProposalScreen} />
 
      
       {/* <Stack.Screen name="Jobs" component={AllJobsScreen} /> */}

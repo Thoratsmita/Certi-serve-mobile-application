@@ -9,8 +9,9 @@ import AllProposalScreen from "../components/screens/AllProposalScreen";
 import YourProposalsScreen from "../components/screens/YourProposalsScreen";
 import ManagementScreen from "../components/screens/ManagementScreen";
 
-const JobDetailNavigation = ({ onPress,item }) => {
+const JobDetailNavigation = ({ onPress, item, user }) => {
   const Top = createMaterialTopTabNavigator();
+  //console.log(user.user_type)
   return (
     <Top.Navigator
       tabBarOptions={{
@@ -25,10 +26,22 @@ const JobDetailNavigation = ({ onPress,item }) => {
         // style: { paddingHorizontal: 10 },
       }}
     >
-      <Top.Screen name="Details">{() => <DetailScreen item={item}/>}</Top.Screen>
-      <Top.Screen name="All Proposals" component={AllProposalScreen} />
-      <Top.Screen name="Your Proposals" component={YourProposalsScreen} />
-      <Top.Screen name="Management" component={ManagementScreen} />
+      <Top.Screen name="Details">
+        {() => <DetailScreen item={item} />}
+      </Top.Screen>
+      <Top.Screen name="All Proposals">
+        {() => <AllProposalScreen item={item} user={user} />}
+      </Top.Screen>
+      {user.user_type == "Server" ? (
+        <Top.Screen name="Your Proposals">
+          {(props) => (
+            <YourProposalsScreen {...props} item={item} user={user} />
+          )}
+        </Top.Screen>
+      ) : null}
+      {user.user_type == "Servee" ? (
+        <Top.Screen name="Management" component={ManagementScreen} />
+      ) : null}
     </Top.Navigator>
   );
 };
