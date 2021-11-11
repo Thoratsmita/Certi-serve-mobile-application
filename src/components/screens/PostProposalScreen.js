@@ -90,6 +90,63 @@ export default function PostProposalScreen({ route }) {
         console.error(error);
       });
   };
+
+const handleSubmitButton = () => {
+    if (!bidAmt) {
+      alert("Please fill Bid Amount");
+      return;
+    }
+
+    if (!days) {
+      alert("Please fill Delivery Target");
+      return;
+    }
+
+    if (!desc) {
+      alert("Please fill Description");
+      return;
+    }
+
+    var dataToSend = {
+      job_id: item.id,
+      user_id: user.id,
+      bid_amount: bidAmt,
+      name: user.name,
+      days_delivered: days,
+      rating: "3",
+      description: desc,
+      status: "active",
+    };
+    var formBody = [];
+    for (var key in dataToSend) {
+      var encodedKey = encodeURIComponent(key);
+      var encodedValue = encodeURIComponent(dataToSend[key]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch("http://radiant-bastion-14577.herokuapp.com/api/proposal/create", {
+      method: "POST",
+      body: formBody,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        navigation.goBack();
+      })
+
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+
+
+
+
   return (
     <ScrollView style={{ backgroundColor: "#f7f7f7",top:StatusBar.currentHeight}}>
       <TouchableOpacity

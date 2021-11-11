@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View,Pressable } from "react-native";
 import {
   useRoute,
   useNavigation,
@@ -9,26 +9,25 @@ import ProposalCard from "../ProposalCard";
 import Box from "../Box";
 import colors from "../../config/colors";
 import { proposalData } from "../../data";
+import { SimpleLineIcons as Icon } from "@expo/vector-icons";
 
-export default function AllProposalScreen({ item,user }) {
+
+export default function AllProposalScreen({ item, user }) {
   const isFocused = useIsFocused();
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   useEffect(() => {
     propFetcher();
   }, [isFocused]);
-
+  console.log(item.id)
   const propFetcher = () => {
-    fetch(
-      "http://radiant-bastion-14577.herokuapp.com/api/proposals/" + item.id,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch("http://radiant-bastion-14577.herokuapp.com/api/proposals/" + item.id, {
+      method: "GET",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => response.json())
       .then((responseJson) => {
         //console.log(responseJson);
@@ -56,7 +55,7 @@ export default function AllProposalScreen({ item,user }) {
         >
           <Text>Total Bid:</Text>
           <Box
-            title={10}
+            title={data.length}
             padding={10}
             textColor={colors.primary}
             marginLeft={5}
@@ -82,6 +81,10 @@ export default function AllProposalScreen({ item,user }) {
     </View>
   ) : (
     <View style={styles.container}>
+      <Pressable onPress={() => setShow(false)}>
+        <Icon name="refresh" size={30} color="#a9a9a9" />
+      </Pressable>
+
       <Text
         style={{ textAlign: "center", color: "#a9a9a9", fontSize: 30, top: 60 }}
       >

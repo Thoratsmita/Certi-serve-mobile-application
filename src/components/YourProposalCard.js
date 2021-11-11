@@ -22,9 +22,7 @@ export default function YourProposalCard({
   return (
     <View style={styles.container}>
       <Text style={{ color: "#818181" }}>
-        Incididunt nulla duis minim occaecat magna eiusmod aute. Culpa fugiat
-        sit sunt enim nulla aliqua aliquip duis ipsum esse. Do deserunt dolor
-        aliquip ut aute et ea voluptate. Laborum quis enim aute qui.
+        {title}
       </Text>
       <View style={styles.content}>
         <View
@@ -33,7 +31,7 @@ export default function YourProposalCard({
           }}
         >
           <Box
-            title="​​₦ 140"
+            title={"​​₦"+amount}
             textColor="#fff"
             fontSize={16}
             backgroundColor={colors.primary}
@@ -41,7 +39,7 @@ export default function YourProposalCard({
             style={{ marginRight: 10 }}
           />
           <Box
-            title="12Days"
+            title={days}
             textColor="#fff"
             fontSize={16}
             backgroundColor={colors.primary}
