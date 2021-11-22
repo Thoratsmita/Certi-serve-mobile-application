@@ -15,14 +15,16 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SubmitButton from "../components/SubmitButton";
 import RadioButton from "../components/RadioButton";
 
-export default function PostJobScreen({ navigation: { goBack } }) {
+export default function PostJobScreen({ navigation: { goBack }, route }) {
   const [jobDesc, setJobDesc] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [jobCat, setJobCat] = useState("");
-  const [userNum, setUserNum] = useState("");
-  const [userPass, setUserPass] = useState("");
-  const [conuserPass, setconUserPass] = useState("");
-
+  const [exp, setExp] = useState("");
+  const [duration, setDuration] = useState("");
+  const [incentive, setIncentive] = useState("");
+  const [lang, setLang] = useState("");
+  const [hours, setHours] = useState("");
+  const { user } = route.params;
   const postJobButton = () => {
     if (!jobDesc) {
       alert("Please Enter Description!");
@@ -34,7 +36,7 @@ export default function PostJobScreen({ navigation: { goBack } }) {
     }
 
     if (jobCat) {
-      alert("Please fill Catergory!");
+      alert("Please fill Category!");
       return;
     }
 
@@ -42,11 +44,17 @@ export default function PostJobScreen({ navigation: { goBack } }) {
       job_description: jobDesc,
       job_location: "Mumbai",
       job_title: jobTitle,
-      servee_id: 3,
+      servee_id: user.id,
       skill_id: 1,
       subcategory_id: 4,
-      job_incentives:6666,
-      status:"active",
+      job_incentives: incentive,
+      status: "active",
+      minimum_experience: exp,
+      job_duration: duration,
+      //job_docs: "DxtBgHwVW1sDceBQ4JBh1pYI47zK5cQxRcGpyLKO.jpg",
+      language: lang,
+      working_hours: hours,
+      status: "active",
     };
     var formBody = [];
     for (var key in dataToSend) {
@@ -95,6 +103,7 @@ export default function PostJobScreen({ navigation: { goBack } }) {
       animationType="slide"
       visible={modalVisible}
       style={styles.modal}
+      inputs={false}
     >
       <TouchableOpacity
         onPress={() => setModalVisible(!modalVisible)}
@@ -142,7 +151,7 @@ export default function PostJobScreen({ navigation: { goBack } }) {
         <View style={styles.cell}>
           <Text style={styles.cellText}>Title</Text>
           <AppTextInput
-            placeholder="Designer for a my Café"
+            placeholder=""
             width="70%"
             onChangeText={(jobTitle) => setJobTitle(jobTitle)}
             end="0/50"
@@ -150,19 +159,59 @@ export default function PostJobScreen({ navigation: { goBack } }) {
         </View>
         <ModalCell
           title="Category "
-          placeholder="e.g. Designer for a my Café  "
+          placeholder="e.g Software  "
           onPress={() => setModalVisible(!modalVisible)}
         />
         <ModalCell
           title="Sub-Category "
-          placeholder="e.g. Designer for a my Café  "
+          placeholder="e.g. App Dev  "
           onPress={() => setModalVisible(!modalVisible)}
         />
         <ModalCell
           title="Location "
-          placeholder="e.g. Designer for a my Café  "
+          placeholder="e.g. Bauchi  "
           onPress={() => setModalVisible(!modalVisible)}
         />
+        <View style={styles.cell}>
+          <Text style={styles.cellText}>Experience</Text>
+          <AppTextInput
+            placeholder="Years"
+            width="25%"
+            onChangeText={(exp) => setExp(exp)}
+          />
+        </View>
+        <View style={styles.cell}>
+          <Text style={styles.cellText}>Duration</Text>
+          <AppTextInput
+            placeholder="Days"
+            width="25%"
+            onChangeText={(duration) => setDuration(duration)}
+          />
+        </View>
+        <View style={styles.cell}>
+          <Text style={styles.cellText}>Incentive</Text>
+          <AppTextInput
+            placeholder="Naira"
+            width="25%"
+            onChangeText={(incentive) => setIncentive(incentive)}
+          />
+        </View>
+        <View style={styles.cell}>
+          <Text style={styles.cellText}>Working Hours</Text>
+          <AppTextInput
+            placeholder="Hours"
+            width="25%"
+            onChangeText={(hours) => setHours(hours)}
+          />
+        </View>
+        <View style={styles.cell}>
+          <Text style={styles.cellText}>Language</Text>
+          <AppTextInput
+            placeholder="e.g English"
+            width="35%"
+            onChangeText={(lang) => setLang(lang)}
+          />
+        </View>
         <View>
           <Text style={styles.cellText}>Details</Text>
           <View style={styles.detailInput}>

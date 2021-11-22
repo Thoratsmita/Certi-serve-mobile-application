@@ -7,6 +7,7 @@ import {
   TextInput,
   Pressable,
   Modal,
+  Button
 } from "react-native";
 
 import colors from "../config/colors";
@@ -15,10 +16,24 @@ import SubmitButton from "../components/SubmitButton";
 import { AntDesign } from "@expo/vector-icons";
 import FileIcon from "../components/FileIcon";
 
-export default function Profile_Server({ navigation: { goBack } }) {
-  const [edit, setEdit] = useState(false);
-
-  const EditDetails = ({ placeholder, editable, onPress, secure = false }) => {
+export default function Profile_Server({ user }) {
+  const [edit, setEdit] = useState(true);
+  const [userEmail, setUserEmail] = useState("");
+  const [userNum, setUserNum] = useState("");
+  const [userPass, setUserPass] = useState("");
+  const [edu, setEdu] = useState("");
+  const [bio, setBio] = useState("");
+  const [rate, setRate] = useState("");
+  const [addr, setAddr] = useState("");
+  const [work, setWork] = useState("");
+  console.log(user);
+  const EditDetails = ({
+    placeholder,
+    editable,
+    onPress,
+    secure = false,
+    onChangeText,
+  }) => {
     return (
       <View style={{ flex: 1, height: 50 }}>
         <Pressable onPress={onPress}>
@@ -31,6 +46,7 @@ export default function Profile_Server({ navigation: { goBack } }) {
               borderBottomColor: "green",
               width: "90%",
             }}
+            onChangeText={() => onChangeText}
             secureTextEntry={secure}
             editable={editable}
             defaultValue={placeholder}
@@ -40,6 +56,50 @@ export default function Profile_Server({ navigation: { goBack } }) {
     );
   };
 
+  const handleSubButton = () => {
+
+
+    var dataToSend = {
+      freelancer_id: user.id,
+      skill_id: "5",
+      job_id: "23",
+      professional_title: bio,
+      education: edu,
+      work_experience: work,
+      certifications: "abc xyz",
+      availability: "3",
+      expected_hourly_rate: "5",
+    };
+    var formBody = [];
+    for (var key in dataToSend) {
+      var encodedKey = encodeURIComponent(key);
+      var encodedValue = encodeURIComponent(dataToSend[key]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch("http://radiant-bastion-14577.herokuapp.com/api/freelancerPortfolio/create", {
+      method: "POST",
+      body: formBody,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+
+        if (responseJson.msg === "User created successfully") {
+          alert("Registration Successful!");
+          navigate("Login");
+        } else {
+          alert(responseJson);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <ScrollView style={styles.container}>
       <View
@@ -60,23 +120,32 @@ export default function Profile_Server({ navigation: { goBack } }) {
         />
         <TextInput
           style={styles.title}
-          defaultValue="David Ray"
+          defaultValue={user.user.name}
           editable={edit}
           autoFocus={true}
         />
-        <AntDesign
-          style={{ position: "absolute", top: 123, left: 240 }}
-          name="edit"
-          size={23}
-          color="gray"
-          onPress={() => alert("Any changes will need to be verified by Admin.")}
-        />
       </View>
       <View style={{ flex: 1, bottom: 190 }}>
-        <EditDetails placeholder="+918595974012" editable={edit} />
-        <EditDetails placeholder="adi.walia@gmail.com" editable={edit} />
-        <EditDetails placeholder="Chennai, India" editable={edit} />
-        <EditDetails placeholder="1234568" editable={edit} secure={true} />
+        <EditDetails
+          placeholder={user.user.phone_no}
+          editable={false}
+          onChangeText={(userNum) => setUserNum(userNum)}
+        />
+        <EditDetails
+          placeholder={user.user.email}
+          editable={false}
+          onChangeText={(userEmail) => setUserEmail(userEmail)}
+        />
+        <EditDetails
+          placeholder="Address"
+          editable={edit}
+          onChangeText={(addr) => setAddr(addr)}
+        />
+        <EditDetails
+          placeholder="Hourly Rate"
+          editable={edit}
+          onChangeText={(rate) => setRate(rate)}
+        />
 
         <Text style={{ color: colors.secondary, fontSize: 20, left: 25 }}>
           Professional Details
@@ -88,6 +157,7 @@ export default function Profile_Server({ navigation: { goBack } }) {
           placeholder="Describe Yourself."
           multiline={true}
           numberOfLines={7}
+          onChangeText={(bio) => setBio(bio)}
           style={{
             textAlignVertical: "top",
             borderColor: "#d3d3d3",
@@ -109,6 +179,7 @@ export default function Profile_Server({ navigation: { goBack } }) {
           }
           multiline={true}
           numberOfLines={4}
+          onChangeText={(edu) => setEdu(edu)}
           style={{
             textAlignVertical: "top",
             borderColor: "#d3d3d3",
@@ -124,26 +195,12 @@ export default function Profile_Server({ navigation: { goBack } }) {
         <Text style={{ color: "black", fontSize: 17, left: 25, top: 70 }}>
           Work Experience
         </Text>
-        <TextInput
-          placeholder={"ADC Company, Delhi\nProfile\nStart - End"}
-          multiline={true}
-          numberOfLines={4}
-          style={{
-            textAlignVertical: "top",
-            borderColor: "#d3d3d3",
-            borderWidth: 1,
-            borderRadius: 10,
-            width: "85%",
-            top: 84,
-            left: 24,
-            padding: 10,
-          }}
-        />
 
         <TextInput
           placeholder={"ADC Company, Delhi\nProfile\nStart - End"}
           multiline={true}
           numberOfLines={4}
+          onChangeText={(work) => setWork(work)}
           style={{
             textAlignVertical: "top",
             borderColor: "#d3d3d3",
@@ -194,22 +251,12 @@ export default function Profile_Server({ navigation: { goBack } }) {
         >
           Update CV
         </Text>
-        <Pressable>
-          <Text
-            style={{
-              backgroundColor: "green",
-              padding: 15,
-              width: "24%",
-              fontSize: 18,
-              left: 140,
-              top: 160,
-              paddingLeft: 20,
-              borderRadius: 10,
-              color: "white",
-            }}
-          >
-            SAVE
-          </Text>
+        <Pressable style={{backgroundColor: 'red'}} >
+          <Button
+            title="SAVE"
+            onPress={() => handleSubButton()}
+          />
+
         </Pressable>
       </View>
     </ScrollView>

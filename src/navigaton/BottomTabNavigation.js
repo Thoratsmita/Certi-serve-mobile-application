@@ -11,8 +11,7 @@ import FinancialDashboard from "../screens/FinancialDashboard";
 import JobsStackNavigation from "./JobStackNavigation";
 import colors from "../config/colors";
 
-const BottomTabNavigation = ({route}) => {
-
+const BottomTabNavigation = ({ route }) => {
   const Bottom = createBottomTabNavigator();
   const user = route.params;
   //console.log(user.user.user.name)
@@ -37,7 +36,7 @@ const BottomTabNavigation = ({route}) => {
             ),
         })}
       >
-        {props => <JobsStackNavigation user={user.user} />}
+        {(props) => <JobsStackNavigation user={user.user} />}
       </Bottom.Screen>
       <Bottom.Screen
         name="Inbox"
@@ -77,7 +76,6 @@ const BottomTabNavigation = ({route}) => {
       />
       <Bottom.Screen
         name="Profile"
-        component={Profile_Server}
         options={({ route }) => ({
           tabBarIcon: ({ color, focused, size }) =>
             focused ? (
@@ -94,7 +92,9 @@ const BottomTabNavigation = ({route}) => {
               />
             ),
         })}
-      />
+      >
+        {(props) => <Profile_Server user={user.user} />}
+      </Bottom.Screen>
     </Bottom.Navigator>
   );
 };

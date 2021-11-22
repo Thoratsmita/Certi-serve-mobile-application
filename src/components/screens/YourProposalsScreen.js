@@ -8,12 +8,15 @@ import {
   View,
   FlatList,
   Pressable,
+  Modal,
 } from "react-native";
 import SubmitButton from "../SubmitButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import YourProposalCard from "../YourProposalCard";
 import ProposalCard from "../ProposalCard";
+import AppTextInput from "../AppTextInput";
+import BoxInput from "../BoxInput";
 import {
   useNavigation,
   useRoute,
@@ -25,12 +28,67 @@ export default function YourProposalsScreen({ item, user }) {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
   const [show, setShow] = useState(false);
+  const [mnameA, setmnameA] = useState("");
+  const [mnameB, setmnameB] = useState("");
   const isFocused = useIsFocused();
-  //console.log(user.id)
-
+  const [modalData, setModalData] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  //console.log(item);
   useEffect(() => {
     propFetcher();
   }, [isFocused]);
+
+  const handleSubmitButton = () => {
+    if (!mnameA) {
+      alert("Please fill Amount");
+      return;
+    }
+
+    if (!mnameB) {
+      alert("Please fill Amount");
+      return;
+    }
+
+    var dataToSend = {
+      job_id: item.job_id,
+      user_id: item.user_id,
+      proposal_id: item.id,
+      milestone_details: [
+        {
+          milestone_name: "Milestone - 1",
+          milestone_amount: mnameA,
+        },
+        {
+          milestone_name: "Milestone - 2",
+          milestone_amount: mnameA,
+        },
+      ],
+    };
+    var formBody = [];
+    for (var key in dataToSend) {
+      var encodedKey = encodeURIComponent(key);
+      var encodedValue = encodeURIComponent(dataToSend[key]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch("http://radiant-bastion-14577.herokuapp.com/api/proposal/create", {
+      method: "POST",
+      body: formBody,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        setModalVisible(false);
+      })
+
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const propFetcher = () => {
     fetch(
@@ -58,9 +116,65 @@ export default function YourProposalsScreen({ item, user }) {
         console.error(error);
       });
   };
+  const MilestoneBlock = ({ milestoneCount, onChangeText }) => (
+    <View style={styles.block}>
+      <TextInput
+        multiline
+        editable={false}
+        numberOfLines={2}
+        defaultValue={"Milestone " + milestoneCount}
+        style={[styles.detailnput, { flex: 1, marginRight: 10 }]}
+
+      />
+      <BoxInput placeholder="​​₦" flexDirection="row" onChangeText = {onChangeText} />
+    </View>
+  );
+  const ModalView = () => (
+    <Modal animationType="slide" visible={modalVisible}>
+      <ScrollView style={{ backgroundColor: "#f7f7f7" }}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => setModalVisible(!modalVisible)}
+        >
+          <MaterialCommunityIcons
+            name="chevron-left"
+            size={40}
+            color={colors.primary}
+          />
+        </TouchableOpacity>
+        <View style={[styles.modalContainer, { flex: 1 }]}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: "green",
+              fontWeight: "bold",
+              justifyContent: "center",
+              alignContent: "center",
+            }}
+          >
+            Edit Proposal
+          </Text>
+          <View style={styles.cell}>
+            <Text style={styles.cellText}>Add Milestones</Text>
+          </View>
+          <MilestoneBlock milestoneCount="1" onChangeText = {(mnameA) => setmnameA(mnameA)} />
+          <MilestoneBlock milestoneCount="2" onChangeText = {(mnameA) => setmnameB(mnameB)}/>
+          <Text style={styles.blurText}>Add another milestone</Text>
+          <SubmitButton
+            title="Create Milestone"
+            textColor="#fff"
+            fontSize={16}
+            backgroundColor={colors.primary}
+            onPress={() => handleSubmitButton()}
+          />
+        </View>
+      </ScrollView>
+    </Modal>
+  );
 
   return (
     <View style={styles.container}>
+      <ModalView />
       {!show ? (
         <View style={styles.container}>
           <FlatList
@@ -72,6 +186,11 @@ export default function YourProposalsScreen({ item, user }) {
                   title={item.name}
                   rating={item.rating}
                   //review={item.review}
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                    setModalData(item);
+                    console.log(item);
+                  }}
                   amount={item.bid_amount}
                   days={item.days_delivered}
                 />
@@ -193,5 +312,19 @@ const styles = StyleSheet.create({
   block: {
     flexDirection: "row",
     // backgroundColor: "red",
+  },
+  cell: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    // paddingHorizontal: "10",
+  },
+  cellContainer: {
+    padding: 10,
+  },
+  cellText: {
+    fontSize: 20,
+    color: "#a9a9a9",
+    fontWeight: "bold",
   },
 });

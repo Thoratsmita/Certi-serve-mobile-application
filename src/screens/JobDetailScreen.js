@@ -18,6 +18,6 @@ export default function JobDetailScreen({ navigation: { goBack }, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top:StatusBar.currentHeight
+    //top:StatusBar.currentHeight
   },
 });

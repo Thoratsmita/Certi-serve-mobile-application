@@ -1,10 +1,10 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import colors from "../config/colors";
 import Box from "./Box";
 import CircleAvatar from "./CircleAvatar";
 
-export default function ProposalCard({ title, rating, review, amount, days }) {
+export default function ProposalCard({ title, rating, review, amount, days, onPress }) {
   const star = () => {
     let star = "";
     for (let i = 0; i < rating; i++) {
@@ -14,39 +14,41 @@ export default function ProposalCard({ title, rating, review, amount, days }) {
     return star;
   };
   return (
-    <View style={styles.container}>
-      <View style={{ flexDirection: "row" }}>
-        <CircleAvatar
-          radius={55 / 2}
-          inline
-          outline
-          borderColor={colors.primary}
-        />
-        <View>
-          <Text style={{ fontSize: 20 }}>{title}</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Box title={rating} padding={15} textColor={colors.primary} />
-            <View>
-              <Text style={{ fontSize: 12 }}>{star()}</Text>
+    <Pressable onPress={onPress}>
+      <View style={styles.container}>
+        <View style={{ flexDirection: "row" }}>
+          <CircleAvatar
+            radius={55 / 2}
+            inline
+            outline
+            borderColor={colors.primary}
+          />
+          <View>
+            <Text style={{ fontSize: 20 }}>{title}</Text>
+            <View style={{ flexDirection: "row" }}>
+              <Box title={rating} padding={15} textColor={colors.primary} />
+              <View>
+                <Text style={{ fontSize: 12 }}>{star()}</Text>
+              </View>
             </View>
+            <Text style={styles.text}>{review} Reviews</Text>
           </View>
-          <Text style={styles.text}>{review} Reviews</Text>
+        </View>
+        <View>
+          <View
+            style={{
+              borderWidth: 1,
+              paddingHorizontal: 10,
+              paddingVertical: 4,
+              alignItems: "center",
+            }}
+          >
+            <Text>₦{amount}</Text>
+          </View>
+          <Text style={{ fontSize: 12, color: "#a9a9a9" }}>In {days} Days</Text>
         </View>
       </View>
-      <View>
-        <View
-          style={{
-            borderWidth: 1,
-            paddingHorizontal: 10,
-            paddingVertical: 4,
-            alignItems: "center",
-          }}
-        >
-          <Text>₦{amount}</Text>
-        </View>
-        <Text style={{ fontSize: 12, color: "#a9a9a9" }}>In {days} Days</Text>
-      </View>
-    </View>
+    </Pressable>
   );
 }
 

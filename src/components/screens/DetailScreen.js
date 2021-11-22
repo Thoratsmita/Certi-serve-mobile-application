@@ -30,17 +30,20 @@ export default function DetailScreen({item}) {
             <Text>
               {item.job_description}
             </Text>
-            <Text>
+            <Text style={{color:"green"}}>
               Minimum Experience: {item.minimum_experience} Years.
             </Text>
-            <Text>
+            <Text style={{color:"green"}}>
               Job Incentives: {item.job_incentives} Naira.
             </Text>
-            <Text>
+            <Text style={{color:"green"}}>
               Language Required: {item.language}
             </Text>
-            <Text>
-              Job Duration: {item.job_duration}
+            <Text style={{color:"green"}}>
+              Job Duration: {item.job_duration} Days
+            </Text>
+            <Text style={{color:"green"}}>
+              Working Hours: {item.working_hours} Hours
             </Text>
           </View>
         </View>
@@ -78,7 +81,7 @@ export default function DetailScreen({item}) {
           </View>
         </View>
         {/* End of Box */}
-        <SubmitButton title="Place Bid" textColor="#fff" />
+
       </View>
     </ScrollView>
   );

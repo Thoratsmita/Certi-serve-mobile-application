@@ -23,21 +23,7 @@ export default function PostProposalScreen({ route }) {
   const [desc, setDesc] = useState("");
   //console.log(user.id);
 
-  const MilestoneBlock = ({ defaultValueCost, milestoneCount }) => (
-    <View style={styles.block}>
-      <TextInput
-        multiline
-        numberOfLines={2}
-        defaultValue={"Milestone " + milestoneCount}
-        style={[styles.detailnput, { flex: 1, marginRight: 10 }]}
-      />
-      <BoxInput
 
-        placeholder="​​₦"
-        flexDirection="row"
-      />
-    </View>
-  );
 
   const handleSubmitButton = () => {
     if (!bidAmt) {
@@ -91,59 +77,6 @@ export default function PostProposalScreen({ route }) {
       });
   };
 
-const handleSubmitButton = () => {
-    if (!bidAmt) {
-      alert("Please fill Bid Amount");
-      return;
-    }
-
-    if (!days) {
-      alert("Please fill Delivery Target");
-      return;
-    }
-
-    if (!desc) {
-      alert("Please fill Description");
-      return;
-    }
-
-    var dataToSend = {
-      job_id: item.id,
-      user_id: user.id,
-      bid_amount: bidAmt,
-      name: user.name,
-      days_delivered: days,
-      rating: "3",
-      description: desc,
-      status: "active",
-    };
-    var formBody = [];
-    for (var key in dataToSend) {
-      var encodedKey = encodeURIComponent(key);
-      var encodedValue = encodeURIComponent(dataToSend[key]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-
-    fetch("http://radiant-bastion-14577.herokuapp.com/api/proposal/create", {
-      method: "POST",
-      body: formBody,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        navigation.goBack();
-      })
-
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
-
 
 
 
@@ -184,10 +117,6 @@ const handleSubmitButton = () => {
 
           style={styles.detailnput}
         />
-        <Text style={styles.heading}>Suggest a milestone payment</Text>
-        <MilestoneBlock milestoneCount="1" />
-        <MilestoneBlock milestoneCount="2" />
-        <Text style={styles.blurText}>Add another milestone</Text>
         <SubmitButton
           title="Create Proposal"
           textColor="#fff"
